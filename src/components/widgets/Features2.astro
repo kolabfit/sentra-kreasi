@@ -2,6 +2,7 @@
 import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
 import Headline from '~/components/ui/Headline.astro';
 import ItemGrid2 from '~/components/ui/ItemGrid2.astro';
+import { Image } from 'astro:assets';
 import type { Features as Props } from '~/types';
 
 const {
@@ -29,10 +30,26 @@ const {
       container: 'gap-4 md:gap-6',
       panel:
         'rounded-lg shadow-[0_4px_30px_rgba(0,0,0,0.1)] dark:shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur border border-[#ffffff29] bg-white dark:bg-slate-900 p-6',
-      // panel:
-      //   "text-center bg-page items-center md:text-left rtl:md:text-right md:items-start p-6 p-6 rounded-md shadow-xl dark:shadow-none dark:border dark:border-slate-800",
       icon: 'w-12 h-12 mb-6 text-primary',
       ...((classes?.items as Record<string, never>) ?? {}),
     }}
-  />
+  >
+    {
+      (item) => (
+        <>
+          {item.image && (
+            <Image
+              src={item.image.src}
+              alt={item.image.alt}
+              width={200}
+              height={200}
+              class="rounded-full mb-4 mx-auto"
+            />
+          )}
+          <h3 class="text-xl font-bold">{item.title}</h3>
+          <p class="text-muted mt-2">{item.description}</p>
+        </>
+      )
+    }
+  </ItemGrid2>
 </WidgetWrapper>

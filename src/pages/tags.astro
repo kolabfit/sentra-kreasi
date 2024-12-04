@@ -68,7 +68,7 @@ const posts = [
     publishDate: new Date('2024-12-01'),
     excerpt: 'This is the excerpt of the first post.',
     image: logoSentra,
-    permalink: 'bruh'
+    permalink: 'bruh',
   },
   {
     id: '2',
@@ -77,7 +77,7 @@ const posts = [
     publishDate: new Date('2024-12-02'),
     excerpt: 'This is the excerpt of the second post.',
     image: logoSentra,
-    permalink: 'bruh'
+    permalink: 'bruh',
   },
   {
     id: '3',
@@ -86,7 +86,7 @@ const posts = [
     publishDate: new Date('2024-12-03'),
     excerpt: 'This is the excerpt of the third post.',
     image: logoSentra,
-    permalink: 'bruh'
+    permalink: 'bruh',
   },
   {
     id: '4',
@@ -95,39 +95,33 @@ const posts = [
     publishDate: new Date('2024-12-04'),
     excerpt: 'This is the excerpt of the fourth post.',
     image: logoSentra,
-    permalink: 'bruh'
+    permalink: 'bruh',
   },
 ];
-
 ---
 
 <Layout metadata={metadata}>
   <WidgetWrapper id={id} isDark={isDark} containerClass={classes?.container as string} bg={bg}>
     <div class="flex flex-col lg:justify-between lg:flex-row mb-8">
-      {
-        title && (
-          <div class="md:max-w-sm">
-            <h2
-              class="text-3xl font-bold tracking-tight sm:text-4xl sm:leading-none group font-heading mb-2"
-              set:html={title}
-            />
-            {APP_BLOG.list.isEnabled && linkText && linkUrl && (
-              <a
-                class="text-muted dark:text-slate-400 hover:text-primary transition ease-in duration-200 block mb-6 lg:mb-0"
-                href={linkUrl}
-              >
-                {linkText} »
-              </a>
-            )}
-          </div>
-        )
-      }
+      <div class="md:max-w-sm">
+        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl sm:leading-none group font-heading mb-2">Events</h2>
+        {
+          APP_BLOG.list.isEnabled && linkText && linkUrl && (
+            <a
+              class="text-muted dark:text-slate-400 hover:text-primary transition ease-in duration-200 block mb-6 lg:mb-0"
+              href={linkUrl}
+            >
+              {linkText} »
+            </a>
+          )
+        }
+      </div>
 
       {information && <p class="text-muted dark:text-slate-400 lg:text-sm lg:max-w-md" set:html={information} />}
     </div>
 
     <div class="grid gap-6 row-gap-5 md:grid-cols-2 lg:grid-cols-4 -mb-6">
-        {posts.map((post) => <Item post={post} />)}
-      </div>
+      {posts.map((post) => <Item post={post} />)}
+    </div>
   </WidgetWrapper>
 </Layout>

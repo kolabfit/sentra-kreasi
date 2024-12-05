@@ -10,6 +10,11 @@ import { findImage } from '~/utils/images';
 import type { MetaData } from '~/types';
 import RelatedPosts from '~/components/blog/RelatedPosts.astro';
 import logoSentra from '../assets/images/logosentra.png';
+import berkebun from '../assets/images/berkebun.jpg';
+import berkebun1 from '../assets/images/berkebun1.jpg';
+import berkebun2 from '../assets/images/berkebun2.jpg';
+import berkebun3 from '../assets/images/berkebun3.jpg';
+import BlogList from '~/components/blog/BlogList.astro';
 
 import Hero from '~/components/widgets/Hero.astro';
 import Note from '~/components/widgets/Note.astro';
@@ -36,6 +41,7 @@ import { findPostsByIds } from '~/utils/blog';
 import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
 import type { Widget } from '~/types';
 import type { Post } from '~/types';
+import Headline from '~/components/blog/Headline.astro';
 
 export interface Props extends Widget {
   title?: string;
@@ -67,7 +73,7 @@ const posts = [
     title: 'First Post',
     publishDate: new Date('2024-12-01'),
     excerpt: 'This is the excerpt of the first post.',
-    image: logoSentra,
+    image: { src: berkebun3, date: '1 December 2024' },
     permalink: 'bruh',
   },
   {
@@ -76,7 +82,7 @@ const posts = [
     title: 'Second Post',
     publishDate: new Date('2024-12-02'),
     excerpt: 'This is the excerpt of the second post.',
-    image: logoSentra,
+    image: { src: berkebun, date: '21 December 2024' },
     permalink: 'bruh',
   },
   {
@@ -85,7 +91,7 @@ const posts = [
     title: 'Third Post',
     publishDate: new Date('2024-12-03'),
     excerpt: 'This is the excerpt of the third post.',
-    image: logoSentra,
+    image: { src: berkebun1, date: '21 December 2024' },
     permalink: 'bruh',
   },
   {
@@ -94,34 +100,26 @@ const posts = [
     title: 'Fourth Post',
     publishDate: new Date('2024-12-04'),
     excerpt: 'This is the excerpt of the fourth post.',
-    image: logoSentra,
+    image: { src: berkebun2, date: '21 December 2024' },
     permalink: 'bruh',
   },
 ];
 ---
 
 <Layout metadata={metadata}>
-  <WidgetWrapper id={id} isDark={isDark} containerClass={classes?.container as string} bg={bg}>
-    <div class="flex flex-col lg:justify-between lg:flex-row mb-8">
-      <div class="md:max-w-sm">
-        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl sm:leading-none group font-heading mb-2">Events</h2>
-        {
-          APP_BLOG.list.isEnabled && linkText && linkUrl && (
-            <a
-              class="text-muted dark:text-slate-400 hover:text-primary transition ease-in duration-200 block mb-6 lg:mb-0"
-              href={linkUrl}
-            >
-              {linkText} »
-            </a>
-          )
-        }
-      </div>
+  <section class="px-4 md:px-6 py-12 sm:py-16 lg:py-20 mx-auto max-w-4xl">
+    <Headline
+      subtitle="Cek event - event menarik dari kami"
+    >
+      Events
+    </Headline>
+    
 
-      {information && <p class="text-muted dark:text-slate-400 lg:text-sm lg:max-w-md" set:html={information} />}
-    </div>
+    <!-- Tambahkan BlogList di sini -->
+    <BlogList posts={posts} />
 
-    <div class="grid gap-6 row-gap-5 md:grid-cols-2 lg:grid-cols-4 -mb-6">
-      {posts.map((post) => <Item post={post} />)}
-    </div>
-  </WidgetWrapper>
+    <!-- Konten lainnya -->
+  </section>
 </Layout>
+
+

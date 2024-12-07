@@ -1,8 +1,8 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
 import Hero from '~/components/widgets/Hero.astro';
-import Note from '~/components/widgets/Note.astro';
-import Features from '~/components/widgets/Features.astro';
+// import Note from '~/components/widgets/Note.astro';
+// import Features from '~/components/widgets/Features.astro';
 import Features2 from '~/components/widgets/Features2.astro';
 // import Steps from '~/components/widgets/Steps.astro';
 import Content from '~/components/widgets/Content.astro';
@@ -13,7 +13,7 @@ import CallToAction from '~/components/widgets/CallToAction.astro';
 // import { string } from 'astro:schema';
 
 const metadata = {
-  title: 'AstroWind — Free template for creating websites with Astro + Tailwind CSS',
+  title: 'KOMUNITAS SENTRA KREASI',
   ignoreTitleTemplate: true,
 };
 ---
@@ -37,14 +37,9 @@ const metadata = {
     </Fragment>
   </Hero>
 
-  <!-- Note Widget ******************* -->
-
-  <Note />
-
   <!-- Content Widget **************** -->
 
   <Content
-    isReversed
     tagline="Highlight Produk"
     title="Produk UKM Sentral Kreasi"
     items={[
@@ -67,6 +62,7 @@ const metadata = {
   <!-- Content Widget **************** -->
 
   <Content
+    isReversed
     isAfterContent
     items={[
       {
@@ -87,7 +83,6 @@ const metadata = {
   <!-- Content Widget **************** -->
 
   <Content
-    isReversed
     isAfterContent
     items={[
       {
@@ -168,6 +163,7 @@ const metadata = {
     title="Events"
     subtitle="Event - event yang sudah diselenggarakan"
     tagline="UKM SENTRA KREASI"
+    columns={2}
     items={[
       {
         title: 'Pembuatan konten digital untuk umkm desa pangalengan',
@@ -247,16 +243,21 @@ const metadata = {
     ]}
   /> -->
 
-  <Features
-    id="Tentang Kami"
-    tagline="SENTRA KREASI"
-    title="Tentang Kami"
-    subtitle="KOMUNITAS KAMPUNG DIGITAL SENTRA KREASI."
+  <Features2
+    tagline="Find Us"
+    columns={2}
     items={[
       {
         title: 'Alamat',
         description:
           'Jl. Raya Banjaran KM 14, Gg. Kesehatan No 124, RT 05/ RW 06, Desa Sukasari, Kec. Pameungpeuk Bandung',
+        icon: 'tabler:location',
+      },
+      {
+        title: 'Call us',
+        description:
+          'WA : 089611284382',
+        icon: 'tabler:phone',
       },
     ]}
   />
@@ -268,7 +269,7 @@ const metadata = {
       {
         variant: 'primary',
         text: 'Kunjungi',
-        href: 'https://www.instagram.com/p/DDECtOazMTi/?img_index=1',
+        href: 'https://www.instagram.com/sentrakreasi.ukm?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==',
         target: '_blank',
         icon: 'tabler:download',
       },

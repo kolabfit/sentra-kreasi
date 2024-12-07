@@ -72,7 +72,9 @@ export default defineConfig({
   ],
 
   image: {
-    domains: ['cdn.pixabay.com'],
+    service: {
+      entrypoint: 'astro/assets/services/sharp'
+    }
   },
 
   markdown: {
@@ -81,10 +83,9 @@ export default defineConfig({
   },
 
   vite: {
-    resolve: {
-      alias: {
-        '~': path.resolve(__dirname, './src'),
-      },
-    },
-  },
+    plugins: [],
+    assetsInclude: ['**/*.png'], // Ini akan memastikan file PNG diproses
+  }
+
+  
 });

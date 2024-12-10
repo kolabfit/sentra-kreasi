@@ -9,12 +9,9 @@ const {
   columns = 2,
   defaultIcon = '',
   classes = {},
-  defaultIconClass = 'text-primary',
-  containerClass = '',
-  panelClass = '',
-  titleClass = '',
-  descriptionClass = '',
 } = Astro.props as ItemGrid;
+
+const defaultIconClass = 'text-primary'; // Define it separately
 ---
 
 <div
@@ -28,7 +25,6 @@ const {
             ? 'sm:grid-cols-2'
             : ''
     }`,
-    containerClass
   )}
 >
   {
@@ -38,7 +34,6 @@ const {
           'relative flex flex-col intersect-once intersect-quarter intercept-no-queue motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade',
           'bg-white dark:bg-slate-900 rounded-lg shadow-md p-6',
           'flex flex-col justify-between items-center h-full min-h-[250px]', // Tambahkan min-height di sini
-          panelClass,
           itemClasses?.panel
         )}
       >
@@ -51,9 +46,9 @@ const {
               <img src={image?.src} width={128} height={128} alt={image?.alt || ''} class="rounded-full" />
             </div>
           )}
-          <div class={twMerge('text-xl font-bold mb-2', titleClass, itemClasses?.title)}>{title}</div>
+          <div class={twMerge('text-xl font-bold mb-2', itemClasses?.title)}>{title}</div>
           {description && (
-            <p class={twMerge('text-muted mt-2', descriptionClass, itemClasses?.description)} set:html={description} />
+            <p class={twMerge('text-muted mt-2', itemClasses?.description)} set:html={description} />
           )}
         </div>
         {callToAction && (

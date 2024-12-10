@@ -189,11 +189,13 @@ export interface CallToAction extends Omit<HTMLAttributes<'a'>, 'slot'> {
   type?: 'button' | 'submit' | 'reset';
 }
 
-export interface ItemGrid {
-  items?: Array<Item>;
-  columns?: number;
-  defaultIcon?: string;
-  classes?: Record<string, string>;
+// ~/types.d.ts
+interface ItemGrid {
+  items?: Array<Item>
+  columns?: number
+  defaultIcon?: string
+  classes?: Record<string, string>
+  defaultIconClass?: string // Add this line
 }
 
 export interface Collapse {

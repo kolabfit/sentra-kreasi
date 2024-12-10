@@ -8,11 +8,11 @@ export const headerData = {
     },
     {
       text: 'Tentang Kami',
-      href: getPermalink('/'),
+      href: getPermalink('/about'),
     },
     {
       text: 'Artikel',
-      href: getPermalink('/'),
+      href: getPermalink('/blog'),
     },
     {
       text: 'Events',
@@ -31,8 +31,8 @@ export const footerData = {
       title: 'Company',
       links: [
         { text: 'Home', href: getPermalink('/')},
-        { text: 'Tentang Kami', href: getPermalink('/') },
-        { text: 'Artikel', href: getPermalink('/') },
+        { text: 'Tentang Kami', href: getPermalink('/about') },
+        { text: 'Artikel', href: getPermalink('/blog') },
         { text: 'Events', href:getPermalink('/tags') },
         { text: 'Hubungi Kami', href: getPermalink('/contact')},
       ],

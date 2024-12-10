@@ -2,6 +2,7 @@
 import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
 import Headline from '~/components/ui/Headline.astro';
 import ItemGrid2 from '~/components/ui/ItemGrid2.astro';
+import { Icon } from 'astro-icon/components';
 import type { Features } from '~/types';
 
 const {
@@ -33,5 +34,10 @@ const {
         ...((classes?.items as {}) ?? {}),
       }}
     />
+  </div>
+
+  {/* Tambahkan slot "more" di sini */}
+  <div class="mt-8">
+    <slot name="more" />
   </div>
 </WidgetWrapper>

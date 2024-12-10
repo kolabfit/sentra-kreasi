@@ -13,7 +13,7 @@ import CallToAction from '~/components/widgets/CallToAction.astro';
 import sorban from '~/assets/images/sorban.png';
 import peci from '~/assets/images/peci.png';
 import kaos from '~/assets/images/peci.png';
-import dompet from '~/assets/images/dompet.png'
+import dompet from '~/assets/images/dompet.png';
 import Maps from '~/components/widgets/Maps.astro';
 // import { string } from 'astro:schema';
 
@@ -26,19 +26,16 @@ const metadata = {
 <Layout metadata={metadata}>
   <!-- Hero Widget ******************* -->
 
-  <Hero
-    image={{ src: '~/assets/images/bg.jpg', alt: 'BG' }}
-  >
+  <Hero image={{ src: '~/assets/images/bg.jpg', alt: 'BG' }}>
     <Fragment slot="title">
-      Komunitas Kampung <br><span class="text-accent dark:text-white highlight">Digital Sentra Kreasi</span>
+      Komunitas Kampung <br /><span class="text-accent dark:text-white highlight">Digital Sentra Kreasi</span>
     </Fragment>
 
     <Fragment slot="subtitle">
-      <span class="hidden sm:inline"> 
-        <span class="font-semibold">Kabupaten Bandung</span> pada awalnya merupakan sebuah 
-        tempat/ komunitas dimana para pelaku UKM dari 
-        Kecamatan Pameungpeuk dan sekitarnya (Baleendah, 
-        Arjasari dan Banjaran) berkumpul.</span>
+      <span class="hidden sm:inline">
+        <span class="font-semibold">Kabupaten Bandung</span> pada awalnya merupakan sebuah tempat/ komunitas dimana para
+        pelaku UKM dari Kecamatan Pameungpeuk dan sekitarnya (Baleendah, Arjasari dan Banjaran) berkumpul.</span
+      >
     </Fragment>
   </Hero>
 
@@ -49,8 +46,7 @@ const metadata = {
     title="Produk UKM Sentral Kreasi"
     items={[
       {
-        title:
-          'Produsen peci Manis HM TOHA Original Bandung, Pastikan peci manis anda asli.',
+        title: 'Produsen peci Manis HM TOHA Original Bandung, Pastikan peci manis anda asli.',
       },
     ]}
     image={{ src: peci, alt: 'peci' }}
@@ -96,10 +92,9 @@ const metadata = {
     ]}
     image={{ src: dompet, alt: 'dompet' }}
   >
-
-  <Fragment slot="content">
-    <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Souvenir</h3>
-  </Fragment>
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Souvenir</h3>
+    </Fragment>
 
     <Fragment slot="bg">
       <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
@@ -112,16 +107,14 @@ const metadata = {
     items={[
       {
         title: 'Kaos Polos Bandung',
-        description:
-        'Kaos Berkualitas Harga Pas. 100% Made In Bandung',
+        description: 'Kaos Berkualitas Harga Pas. 100% Made In Bandung',
       },
     ]}
     image={{ src: kaos, alt: 'kaos' }}
   >
-
-  <Fragment slot="content">
-    <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Kaos</h3>
-  </Fragment>
+    <Fragment slot="content">
+      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Kaos</h3>
+    </Fragment>
 
     <Fragment slot="bg">
       <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
@@ -172,13 +165,12 @@ const metadata = {
     items={[
       {
         title: 'Pembuatan konten digital untuk umkm desa pangalengan',
-        description: "Sharing pembuatan konten digital untuk umkm desa pangalengan",
+        description: 'Sharing pembuatan konten digital untuk umkm desa pangalengan',
         icon: 'flat-color-icons:template',
       },
       {
         title: 'Program desa umkm pangalengan telkom indonesia x telkom university',
-        description:
-          "Sharing & kickoff program desa umkm pangalengan telkom indonesia x telkom university",
+        description: 'Sharing & kickoff program desa umkm pangalengan telkom indonesia x telkom university',
         icon: 'flat-color-icons:gallery',
       },
       {
@@ -193,6 +185,12 @@ const metadata = {
   >
     <Fragment slot="bg">
       <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
+    </Fragment>
+
+    <Fragment slot="more">
+      <div class="mt-8 text-right">
+        <a href="/tags" class="text-blue-600 hover:text-blue-800 font-semibold"> Lihat Semua Event </a>
+      </div>
     </Fragment>
   </Features2>
 
@@ -260,16 +258,15 @@ const metadata = {
       },
       {
         title: 'Call us',
-        description:
-          'WA : 089611284382',
+        description: 'WA : 089611284382',
         icon: 'tabler:phone',
       },
     ]}
   />
 
-    <!-- CallToAction Widget *********** -->
+  <!-- CallToAction Widget *********** -->
 
-    <CallToAction
+  <CallToAction
     actions={[
       {
         variant: 'primary',
@@ -281,7 +278,9 @@ const metadata = {
     ]}
   >
     <Fragment slot="title">
-      KOMUNITAS KAMPUNG DIGITAL&nbsp;<br class="block sm:hidden" /><span class="sm:whitespace-nowrap">SENTRA KREASI</span>
+      KOMUNITAS KAMPUNG DIGITAL&nbsp;<br class="block sm:hidden" /><span class="sm:whitespace-nowrap"
+        >SENTRA KREASI</span
+      >
     </Fragment>
   </CallToAction>
 

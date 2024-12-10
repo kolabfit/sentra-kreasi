@@ -9,11 +9,9 @@ export const headerData = {
     {
       text: 'Tentang Kami',
       href: getPermalink('/about'),
-      href: getPermalink('/about'),
     },
     {
       text: 'Artikel',
-      href: getPermalink('/blog'),
       href: getPermalink('/blog'),
     },
     {

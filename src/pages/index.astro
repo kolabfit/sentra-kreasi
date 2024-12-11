@@ -10,6 +10,7 @@ import Content from '~/components/widgets/Content.astro';
 // import FAQs from '~/components/widgets/FAQs.astro';
 // import Stats from '~/components/widgets/Stats.astro ';
 import CallToAction from '~/components/widgets/CallToAction.astro';
+import HomeEvents from '~/components/contentfulComponents/HomeEvents.astro';
 import sorban from '~/assets/images/sorban.png';
 import peci from '~/assets/images/peci.png';
 import kaos from '~/assets/images/peci.png';
@@ -111,10 +112,14 @@ const metadata = {
 
   <!-- Features2 Widget ************** -->
 
-  <Features2
-    title="Events"
-    subtitle="Event - event yang sudah diselenggarakan"
-    tagline="UKM SENTRA KREASI"
+  <Headline 
+    title='Events' 
+    subtitle='Event - event yang sudah diselenggarakan' 
+    tagline='UKM SENTRA KREASI'/>
+  <HomeEvents
+    title=""
+    subtitle=""
+    tagline=""
     columns={2}
     items={[
       {
@@ -151,9 +156,15 @@ const metadata = {
       </div>
     </Fragment>
   </Features2>
+  
+  <Features2
+    title="Find Us"
+    subtitle="Kunjungi Kami"
+  />
+
+  <Maps />
 
   <Features2
-    tagline="Find Us"
     columns={2}
     items={[
       {
@@ -169,8 +180,6 @@ const metadata = {
       },
     ]}
   />
-  
-  <Maps />
 
   <!-- CallToAction Widget *********** -->
 
@@ -181,7 +190,6 @@ const metadata = {
         text: 'Kunjungi',
         href: 'https://www.instagram.com/sentrakreasi.ukm?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==',
         target: '_blank',
-        icon: 'tabler:download',
       },
     ]}
   >

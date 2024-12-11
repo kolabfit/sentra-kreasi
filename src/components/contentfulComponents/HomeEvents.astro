@@ -1,0 +1,92 @@
+---
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import Headline from '~/components/ui/Headline.astro';
+import ItemGrid2 from '~/components/ui/ItemGrid2.astro';
+import type { Asset, EntryFieldTypes } from 'contentful';
+// import { Icon } from 'astro-icon/components';
+// import type { Features } from '~/types';
+
+const {
+  columns = 2,
+
+  id,
+  isDark = false,
+  classes = {},
+  bg = await Astro.slots.render('bg'),
+} = Astro.props;
+
+import { contentfulClient } from '~/lib/contentful';
+
+interface EventItemType {
+  contentTypeId: string;
+  fields: {
+    idHalaman: EntryFieldTypes.Text;
+    judul: EntryFieldTypes.Text;
+    deskripsi: EntryFieldTypes.Text;
+    gambar: EntryFieldTypes.AssetLink;
+    price: EntryFieldTypes.Number;
+    tags: EntryFieldTypes.Text[];
+  };
+}
+
+// Fetch the entry and include linked assets
+const entries = await contentfulClient.getEntries<EventItemType>({
+  content_type: 'eventItemType',
+});
+
+function truncateString(str: string, length: number = 40): string {
+    if (!str || str.length <= length) {
+        return str;
+    }
+    return str.substring(0, length) + '...';
+}
+
+const ContentItems = entries.items.map((item) => {
+    const asset1: Asset | undefined = entries.includes?.Asset?.find(
+        (asset: Asset) => asset?.sys?.id === item?.fields?.gambar?.sys?.id
+    );
+
+    const thumbailURL: string | null = typeof asset1?.fields?.file?.url === 'string' ? asset1.fields.file.url : null;
+
+  return {
+    idHalaman: item.fields.idHalaman,
+    title: item.fields.judul,
+    description: truncateString(item.fields.deskripsi),
+    image: thumbailURL,
+    price: item.fields.price,
+    tags: item.fields.tags,
+  };
+});
+
+function shuffleArray(array: any[]): any[] {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+const randomizedItems = shuffleArray(ContentItems);
+---
+
+<WidgetWrapper id={id} isDark={isDark} containerClass={`max-w-7xl mx-auto ${classes?.container ?? ''}`} bg={bg}>
+  <div class="flex justify-center items-center w-full">
+    <ItemGrid2
+      items={ContentItems}
+      columns={columns}
+      classes={{
+        container: 'gap-4 md:gap-6 flex justify-center items-center',
+        panel:
+          'rounded-lg shadow-[0_4px_30px_rgba(0,0,0,0.1)] dark:shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur border border-[#ffffff29] bg-white dark:bg-slate-900 p-6 text-center flex flex-col items-center justify-center w-full h-full',
+        title: 'text-center',
+        deskripsi: 'text-center',
+        ...((classes?.items as {}) ?? {}),
+      }}
+    />
+  </div>
+
+  {/* Tambahkan slot "more" di sini */}
+  <div class="mt-8">
+    <slot name="more" />
+  </div>
+</WidgetWrapper>

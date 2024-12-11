@@ -3,7 +3,7 @@ import { Icon } from 'astro-icon/components';
 import { SITE } from 'astrowind:config';
 import { getHomePermalink } from '~/utils/permalinks';
 import { Image } from 'astro:assets';
-import logosentra from '../../assets/images/logosentra.png';
+import logosentra from '../../assets/images/logosamping.png';
 
 interface Link {
   text?: string;
@@ -89,8 +89,8 @@ const {
           </div>
         ))
       }
-      <div class="mt-8 text-right">
-        <Image src={logosentra} alt="Description of the image" class="mx-auto" />
+      <div class="text-right">
+        <Image src={logosentra} alt="Description of the image" class="mx-auto" width="200" />
       </div>
     </div>
 

@@ -28,7 +28,7 @@ export const headerData = {
 export const footerData = {
   links: [
     {
-      title: 'Company',
+      title: 'Menu',
       links: [
         {
           text: 'Home',
@@ -53,7 +53,9 @@ export const footerData = {
       ],
     },
   ],
+  secondaryLinks: [],
   socialLinks: [
+    { ariaLabel: 'Whatsapp', icon: 'tabler:brand-whatsapp', href: 'https://wa.me/+6289611284382' },
     { ariaLabel: 'Instagram', icon: 'tabler:brand-instagram', href: 'https://www.instagram.com/sentrakreasi.ukm/' },
   ],
 };

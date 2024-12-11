@@ -1,0 +1,90 @@
+---
+import { getPermalink } from '~/utils/permalinks';
+import Layout from '~/layouts/PageLayout.astro';
+import Hero from '~/components/widgets/Hero.astro';
+import Content from '~/components/widgets/Content.astro';
+import { contentfulClient } from '~/lib/contentful';
+import type { Asset, EntryFieldTypes } from 'contentful';
+import Features2 from '~/components/widgets/Features2.astro';
+
+// Define the Contentful content type interface
+interface EdutainmentPaketType {
+  contentTypeId: string;
+  fields: {
+    entryname: EntryFieldTypes.Text;
+    foto: EntryFieldTypes.AssetLink;
+    judul: EntryFieldTypes.Text;
+    description: EntryFieldTypes.Text;
+  };
+}
+
+// Fetch dynamic data for each possible route using getStaticPaths
+export async function getStaticPaths() {
+  // Fetch all entries of type 'edutimentPaketType' from Contentful
+  const entries = await contentfulClient.getEntries<EdutainmentPaketType>({
+    content_type: 'edutimentPaketType',
+  });
+
+  // Generate a list of paths for all `entryname` values
+  return entries.items.map((item) => ({
+    params: { id: item.fields.entryname },
+  }));
+}
+
+// Get the current route parameter
+const { id } = Astro.params;
+
+// Fetch the specific entry based on the dynamic `id`
+const entries = await contentfulClient.getEntries<EdutainmentPaketType>({
+  content_type: 'edutimentPaketType',
+  'fields.entryname': id, // Use the `id` from URL to match the entryname in Contentful
+});
+
+// Handle case where no entries are found
+if (!entries.items.length) {
+  throw new Error('Content not found');
+}
+
+// Get the first item (as we are only fetching a single entry with this id)
+const item = entries.items[0];
+
+// Fetch the associated asset (if it exists)
+const asset: Asset | undefined = entries.includes?.Asset?.find(
+  (asset: Asset) => asset?.sys?.id === item?.fields?.foto?.sys?.id
+);
+
+// Safely access the image URL
+const imageURL: string | null = typeof asset?.fields?.file?.url === 'string' ? asset.fields.file.url : null;
+// Set metadata for the page
+const metadata = {
+  title: item.fields.judul || 'Edutainment',
+};
+
+// Extract fields for rendering in the Content component
+const { judul, description } = item.fields;
+---
+
+<Layout metadata={metadata}>
+
+  <!-- Content Section -->
+  <Content
+    image={{
+      src: imageURL,
+      alt: 'Edutainment Image',
+      loading: 'eager',
+    }}
+  >
+    <Fragment slot="content">
+      <h2 class="text-2xl text-center font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{judul}</h2>
+      <article
+            class="text-pretty text-neutral-700 dark:text-neutral-300 text-justify" 
+            set:html={description.replace(/\n/g, '<br>')}
+            >
+      </article>
+    </Fragment>
+
+    <Fragment slot="bg">
+      <div class="absolute inset-0"></div>
+    </Fragment>
+  </Content>
+</Layout>

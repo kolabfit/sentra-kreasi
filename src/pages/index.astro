@@ -19,6 +19,7 @@ import kick from '~/assets/images/kick.png';
 import sharing from '~/assets/images/sharing.png';
 import pelatihan from '~/assets/images/pelatihan.png';
 import kunjungan from '~/assets/images/kunjungan.png';
+import Headline from '~/components/ui/Headline.astro';
 // import { string } from 'astro:schema';
 
 const metadata = {
@@ -26,6 +27,7 @@ const metadata = {
   ignoreTitleTemplate: true,
 };
 ---
+
 <Layout metadata={metadata}>
   <!-- Hero Widget ******************* -->
 
@@ -37,29 +39,32 @@ const metadata = {
     <Fragment slot="subtitle">
       <span class="hidden sm:inline">
         <span class="font-semibold">Kabupaten Bandung</span> pada awalnya merupakan sebuah tempat/ komunitas dimana para
-        pelaku UKM dari Kecamatan Pameungpeuk dan sekitarnya (Baleendah, Arjasari dan Banjaran) berkumpul.</span>
+        pelaku UKM dari Kecamatan Pameungpeuk dan sekitarnya (Baleendah, Arjasari dan Banjaran) berkumpul.</span
+      >
     </Fragment>
   </Hero>
+  
+  <Headline
+    title='Produk UKM Sentral Kreasi'
+    tagline='Highlight Produk'
+    classes={{
+      container: 'max-w-xl sm:mx-auto lg:max-w-2xl',
+      title: 'text-4xl md:text-5xl font-bold tracking-tighter mb-4 font-heading',
+      subtitle: 'max-w-3xl mx-auto sm:text-center text-xl text-muted dark:text-slate-400',
+    }}
+  />
 
   <!-- Content Widget **************** -->
 
   <Content
-    tagline="Highlight Produk"
-    title="Produk UKM Sentral Kreasi"
     items={[
       {
         title: 'Produsen peci Manis HM TOHA Original Bandung, Pastikan peci manis anda asli.',
+        description: 'Peci Manis HM TOHA Original Bandung merupakan produk unggulan dari Sentra Kreasi yang dirancang khusus untuk memenuhi kebutuhan aksesoris kepala bagi para pria muslim. Dengan desain yang elegan dan kualitas terbaik, peci ini dijamin akan memberikan kesan yang tak terlupakan bagi pemakainya.',
       },
     ]}
     image={{ src: peci, alt: 'peci' }}
   >
-    <Fragment slot="content">
-      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Peci/Songkok</h3>
-    </Fragment>
-
-    <Fragment slot="bg">
-      <div class="absolut inset-0 bg-blue-50 dark:bg-transparent"></div>
-    </Fragment>
   </Content>
 
   <!-- Content Widget **************** -->
@@ -70,17 +75,11 @@ const metadata = {
     items={[
       {
         title: 'Sorban Permanen dan Ikat Kepala',
+        description: 'Sorban Permanen dan Ikat Kepala merupakan produk unggulan dari Sentra Kreasi yang dirancang khusus untuk memenuhi kebutuhan aksesoris kepala bagi para pria muslim. Dengan desain yang elegan dan kualitas terbaik, sorban ini dijamin akan memberikan kesan yang tak terlupakan bagi pemakainya.',
       },
     ]}
     image={{ src: sorban, alt: 'sorban' }}
   >
-    <Fragment slot="content">
-      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Sorban</h3>
-    </Fragment>
-
-    <Fragment slot="bg">
-      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
-    </Fragment>
   </Content>
 
   <!-- Content Widget **************** -->
@@ -90,17 +89,11 @@ const metadata = {
     items={[
       {
         title: 'Souvenir Pernikahan - Allure',
+        description: 'Souvenir Pernikahan - Allure merupakan produk unggulan dari Sentra Kreasi yang dirancang khusus untuk memenuhi kebutuhan souvenir pernikahan yang elegan dan eksklusif. Dengan desain yang menawan dan kualitas terbaik, souvenir ini dijamin akan memberikan kesan yang tak terlupakan bagi para tamu undangan.',
       },
     ]}
     image={{ src: dompet, alt: 'dompet' }}
   >
-    <Fragment slot="content">
-      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Souvenir</h3>
-    </Fragment>
-
-    <Fragment slot="bg">
-      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
-    </Fragment>
   </Content>
 
   <Content
@@ -114,48 +107,7 @@ const metadata = {
     ]}
     image={{ src: kaos, alt: 'kaos' }}
   >
-    <Fragment slot="content">
-      <h3 class="text-2xl font-bold tracking-tight dark:text-white sm:text-3xl mb-2">Kaos</h3>
-    </Fragment>
-
-    <Fragment slot="bg">
-      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
-    </Fragment>
   </Content>
-
-  <!-- Steps Widget ****************** -->
-
-  <!-- <Steps
-    title="Get your dream website up and running in no time with AstroWind."
-    items={[
-      {
-        title: 'Step 1: <span class="font-medium">Download</span>',
-        description:
-          "Kickstart with GitHub! Either fork the AstroWind template or simply click 'Use this template'. Your canvas awaits, ready for your digital masterpiece. In just a few clicks, you've already set the foundation.",
-        icon: 'tabler:package',
-      },
-      {
-        title: 'Step 2: <span class="font-medium">Add content</span>',
-        description:
-          "Pour your vision into it. Add images, text, and all that jazz to breathe life into your digital space. Remember, it's the content that tells your story, so make it captivating.",
-        icon: 'tabler:letter-case',
-      },
-      {
-        title: 'Step 3: <span class="font-medium">Customize styles</span>',
-        description:
-          'Give it your personal touch. Tailor colors, fonts, and layouts until it feels just right. Your unique flair, amplified by AstroWind! Precision in design ensures a seamless user experience.',
-        icon: 'tabler:paint',
-      },
-      {
-        title: 'Ready!',
-        icon: 'tabler:check',
-      },
-    ]}
-    image={{
-      src: 'https://images.unsplash.com/photo-1616198814651-e71f960c3180?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80',
-      alt: 'Steps image',
-    }}
-  /> -->
 
   <!-- Features2 Widget ************** -->
 
@@ -167,30 +119,31 @@ const metadata = {
     items={[
       {
         title: 'Pembuatan konten digital untuk umkm desa pangalengan',
-        description: 'Program pembuatan konten digital untuk UMKM di Desa Pangalengan merupakan upaya strategis untuk meningkatkan visibilitas dan daya saing produk lokal di era digital. Berfokus pada pengembangan kemampuan pemasaran berbasis teknologi, kegiatan ini dirancang untuk membantu pelaku UMKM di Pangalengan memanfaatkan platform digital sebagai media promosi utama.',
+        description:
+          'Program pembuatan konten digital untuk UMKM di Desa Pangalengan merupakan upaya strategis untuk meningkatkan visibilitas dan daya saing produk lokal di era digital. Berfokus pada pengembangan kemampuan pemasaran berbasis teknologi, kegiatan ini dirancang untuk membantu pelaku UMKM di Pangalengan memanfaatkan platform digital sebagai media promosi utama.',
         image: sharing,
       },
 
       {
         title: 'Program desa umkm pangalengan telkom indonesia x telkom university',
-        description: 'Program Desa UMKM Pangalengan merupakan inisiatif kolaboratif antara Telkom Indonesia dan Telkom University yang bertujuan untuk memberdayakan pelaku Usaha Mikro, Kecil, dan Menengah (UMKM) di kawasan Pangalengan melalui pendekatan berbasis teknologi dan edukasi. Program ini dirancang untuk mengintegrasikan potensi lokal dengan solusi digital guna mendorong pertumbuhan ekonomi dan keberlanjutan usaha di desa tersebut.',
+        description:
+          'Program Desa UMKM Pangalengan merupakan inisiatif kolaboratif antara Telkom Indonesia dan Telkom University yang bertujuan untuk memberdayakan pelaku Usaha Mikro, Kecil, dan Menengah (UMKM) di kawasan Pangalengan melalui pendekatan berbasis teknologi dan edukasi. Program ini dirancang untuk mengintegrasikan potensi lokal dengan solusi digital guna mendorong pertumbuhan ekonomi dan keberlanjutan usaha di desa tersebut.',
         image: kick,
       },
       {
         title: 'Pelatihan kupas tuntas sukses live shopee',
-        description: 'Pelatihan "Kupas Tuntas Sukses Live Shopee" merupakan program edukasi yang dirancang khusus untuk membantu pelaku usaha memaksimalkan potensi platform Shopee melalui fitur live streaming. Dalam era digital, live streaming menjadi salah satu metode promosi yang efektif untuk menarik perhatian pembeli, meningkatkan interaksi langsung, dan mendorong penjualan produk secara real-time.',
+        description:
+          'Pelatihan "Kupas Tuntas Sukses Live Shopee" merupakan program edukasi yang dirancang khusus untuk membantu pelaku usaha memaksimalkan potensi platform Shopee melalui fitur live streaming. Dalam era digital, live streaming menjadi salah satu metode promosi yang efektif untuk menarik perhatian pembeli, meningkatkan interaksi langsung, dan mendorong penjualan produk secara real-time.',
         image: pelatihan,
       },
       {
         title: 'Kunjungan kerja kampung digital sentra kreasi di gunung puntang',
-        description: 'Kunjungan kerja ini merupakan bagian dari program kolaborasi dan pengembangan inovasi digital yang diinisiasi oleh Sentra Kreasi melalui konsep Kampung Digital. Berlokasi di kawasan Gunung Puntang yang terkenal dengan keindahan alam dan sejarahnya, kegiatan ini bertujuan untuk mengenalkan teknologi digital sebagai solusi pemberdayaan masyarakat lokal.',
+        description:
+          'Kunjungan kerja ini merupakan bagian dari program kolaborasi dan pengembangan inovasi digital yang diinisiasi oleh Sentra Kreasi melalui konsep Kampung Digital. Berlokasi di kawasan Gunung Puntang yang terkenal dengan keindahan alam dan sejarahnya, kegiatan ini bertujuan untuk mengenalkan teknologi digital sebagai solusi pemberdayaan masyarakat lokal.',
         image: kunjungan,
       },
     ]}
   >
-    <Fragment slot="bg">
-      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
-    </Fragment>
 
     <Fragment slot="more">
       <div class="mt-8 text-right">
@@ -198,58 +151,6 @@ const metadata = {
       </div>
     </Fragment>
   </Features2>
-
-  <!-- FAQs Widget ******************* -->
-
-  <!-- <FAQs
-    title="Frequently Asked Questions"
-    subtitle="Dive into the following questions to gain insights into the powerful features that AstroWind offers and how it can elevate your web development journey."
-    tagline="FAQs"
-    classes={{ container: 'max-w-6xl' }}
-    items={[
-      {
-        title: 'Why AstroWind?',
-        description:
-          "Michael Knight a young loner on a crusade to champion the cause of the innocent. The helpless. The powerless in a world of criminals who operate above the law. Here he comes Here comes Speed Racer. He's a demon on wheels.",
-      },
-      {
-        title: 'What do I need to start?',
-        description:
-          'Space, the final frontier. These are the voyages of the Starship Enterprise. Its five-year mission: to explore strange new worlds. Many say exploration is part of our destiny, but it’s actually our duty to future generations.',
-      },
-      {
-        title: 'How to install the Astro + Tailwind CSS template?',
-        description:
-          "Well, the way they make shows is, they make one show. That show's called a pilot. Then they show that show to the people who make shows, and on the strength of that one show they decide if they're going to make more shows.",
-      },
-      {
-        title: "What's something that you don't understand?",
-        description:
-          "A flower in my garden, a mystery in my panties. Heart attack never stopped old Big Bear. I didn't even know we were calling him Big Bear.",
-      },
-      {
-        title: 'What is something that you would like to try again?',
-        description:
-          "A business big enough that it could be listed on the NASDAQ goes belly up. Disappears! It ceases to exist without me. No, you clearly don't know who you're talking to, so let me clue you in.",
-      },
-      {
-        title: 'If you could only ask one question to each person you meet, what would that question be?',
-        description:
-          "This is not about revenge. This is about justice. A lot of things can change in twelve years, Admiral. Well, that's certainly good to know. About four years. I got tired of hearing how young I looked.",
-      },
-    ]}
-  /> -->
-
-  <!-- Stats Widget ****************** -->
-
-  <!-- <Stats
-    stats={[
-      { title: 'Downloads', amount: '132K' },
-      { title: 'Stars', amount: '24.8K' },
-      { title: 'Forks', amount: '10.3K' },
-      { title: 'Users', amount: '48.4K' },
-    ]}
-  /> -->
 
   <Features2
     tagline="Find Us"
@@ -268,6 +169,8 @@ const metadata = {
       },
     ]}
   />
+  
+  <Maps />
 
   <!-- CallToAction Widget *********** -->
 
@@ -288,6 +191,4 @@ const metadata = {
       >
     </Fragment>
   </CallToAction>
-
-  <Maps />
 </Layout>

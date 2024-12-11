@@ -15,6 +15,10 @@ import peci from '~/assets/images/peci.png';
 import kaos from '~/assets/images/peci.png';
 import dompet from '~/assets/images/dompet.png';
 import Maps from '~/components/widgets/Maps.astro';
+import kick from '~/assets/images/kick.png';
+import sharing from '~/assets/images/sharing.png';
+import pelatihan from '~/assets/images/pelatihan.png';
+import kunjungan from '~/assets/images/kunjungan.png';
 // import { string } from 'astro:schema';
 
 const metadata = {
@@ -22,7 +26,6 @@ const metadata = {
   ignoreTitleTemplate: true,
 };
 ---
-
 <Layout metadata={metadata}>
   <!-- Hero Widget ******************* -->
 
@@ -34,8 +37,7 @@ const metadata = {
     <Fragment slot="subtitle">
       <span class="hidden sm:inline">
         <span class="font-semibold">Kabupaten Bandung</span> pada awalnya merupakan sebuah tempat/ komunitas dimana para
-        pelaku UKM dari Kecamatan Pameungpeuk dan sekitarnya (Baleendah, Arjasari dan Banjaran) berkumpul.</span
-      >
+        pelaku UKM dari Kecamatan Pameungpeuk dan sekitarnya (Baleendah, Arjasari dan Banjaran) berkumpul.</span>
     </Fragment>
   </Hero>
 
@@ -56,7 +58,7 @@ const metadata = {
     </Fragment>
 
     <Fragment slot="bg">
-      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
+      <div class="absolut inset-0 bg-blue-50 dark:bg-transparent"></div>
     </Fragment>
   </Content>
 
@@ -165,21 +167,24 @@ const metadata = {
     items={[
       {
         title: 'Pembuatan konten digital untuk umkm desa pangalengan',
-        description: 'Sharing pembuatan konten digital untuk umkm desa pangalengan',
-        icon: 'flat-color-icons:template',
+        description: 'Program pembuatan konten digital untuk UMKM di Desa Pangalengan merupakan upaya strategis untuk meningkatkan visibilitas dan daya saing produk lokal di era digital. Berfokus pada pengembangan kemampuan pemasaran berbasis teknologi, kegiatan ini dirancang untuk membantu pelaku UMKM di Pangalengan memanfaatkan platform digital sebagai media promosi utama.',
+        image: sharing,
       },
+
       {
         title: 'Program desa umkm pangalengan telkom indonesia x telkom university',
-        description: 'Sharing & kickoff program desa umkm pangalengan telkom indonesia x telkom university',
-        icon: 'flat-color-icons:gallery',
+        description: 'Program Desa UMKM Pangalengan merupakan inisiatif kolaboratif antara Telkom Indonesia dan Telkom University yang bertujuan untuk memberdayakan pelaku Usaha Mikro, Kecil, dan Menengah (UMKM) di kawasan Pangalengan melalui pendekatan berbasis teknologi dan edukasi. Program ini dirancang untuk mengintegrasikan potensi lokal dengan solusi digital guna mendorong pertumbuhan ekonomi dan keberlanjutan usaha di desa tersebut.',
+        image: kick,
       },
       {
         title: 'Pelatihan kupas tuntas sukses live shopee',
-        icon: 'flat-color-icons:approval',
+        description: 'Pelatihan "Kupas Tuntas Sukses Live Shopee" merupakan program edukasi yang dirancang khusus untuk membantu pelaku usaha memaksimalkan potensi platform Shopee melalui fitur live streaming. Dalam era digital, live streaming menjadi salah satu metode promosi yang efektif untuk menarik perhatian pembeli, meningkatkan interaksi langsung, dan mendorong penjualan produk secara real-time.',
+        image: pelatihan,
       },
       {
-        title: 'Kunjungan kerja kampung digital sentra kreasi di gunung puntang ',
-        icon: 'flat-color-icons:document',
+        title: 'Kunjungan kerja kampung digital sentra kreasi di gunung puntang',
+        description: 'Kunjungan kerja ini merupakan bagian dari program kolaborasi dan pengembangan inovasi digital yang diinisiasi oleh Sentra Kreasi melalui konsep Kampung Digital. Berlokasi di kawasan Gunung Puntang yang terkenal dengan keindahan alam dan sejarahnya, kegiatan ini bertujuan untuk mengenalkan teknologi digital sebagai solusi pemberdayaan masyarakat lokal.',
+        image: kunjungan,
       },
     ]}
   >

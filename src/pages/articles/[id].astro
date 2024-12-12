@@ -1,0 +1,166 @@
+---
+import type { InferGetStaticPropsType, GetStaticPaths } from 'astro';
+
+import merge from 'lodash.merge';
+import type { ImageMetadata } from 'astro';
+import Layout from '~/layouts/PageLayout.astro';
+import SinglePost from '~/components/blog/SinglePost.astro';
+import ToBlogLink from '~/components/blog/ToBlogLink.astro';
+
+import { getCanonical, getPermalink } from '~/utils/permalinks';
+import { getStaticPathsBlogPost, blogPostRobots } from '~/utils/blog';
+import type { MetaData } from '~/types';
+import RelatedPosts from '~/components/blog/RelatedPosts.astro';
+
+import Hero from '~/components/widgets/Hero.astro';
+import Content from '~/components/widgets/Content.astro';
+import { contentfulClient } from '~/lib/contentful';
+import type { Asset, EntryFieldTypes, UnresolvedLink } from 'contentful';
+import Features2 from '~/components/widgets/Features2.astro';
+import BlogHighlightedPosts from '~/components/widgets/BlogHighlightedPosts.astro';
+
+import { Icon } from 'astro-icon/components';
+
+import Image from '~/components/common/Image.astro';
+import PostTags from '~/components/blog/Tags.astro';
+import SocialShare from '~/components/common/SocialShare.astro';
+
+import { getFormattedDate } from '~/utils/utils';
+
+import type { Post } from '~/types';
+
+interface ArticleItemType {
+  contentTypeId: string;
+  fields: {
+    idHalaman: EntryFieldTypes.Text;
+    judul: EntryFieldTypes.Text;
+    deskripsi: EntryFieldTypes.Text;
+    gambar: EntryFieldTypes.AssetLink;
+    tanggal: EntryFieldTypes.Date;
+    tags: EntryFieldTypes.Text[];
+  };
+}
+
+// Fetch dynamic data for each possible route using getStaticPaths
+export async function getStaticPaths() {
+  // Fetch all entries of type 'edutimentPaketType' from Contentful
+  const entries = await contentfulClient.getEntries<ArticleItemType>({
+    content_type: 'artikelItemType',
+  });
+
+  // Generate a list of paths for all `entryname` values
+  return entries.items.map((item) => ({
+    params: { id: item.fields.idHalaman },
+  }));
+}
+
+// Get the current route parameter
+const { id } = Astro.params;
+
+// Fetch the specific entry based on the dynamic `id`
+const entries = await contentfulClient.getEntries<ArticleItemType>({
+  content_type: 'artikelItemType',
+  'fields.idHalaman': id, // Use the `id` from URL to match the entryname in Contentful
+});
+
+// Handle case where no entries are found
+if (!entries.items.length) {
+  throw new Error('Content not found');
+}
+
+// Get the first item (as we are only fetching a single entry with this id)
+const item = entries.items[0];
+
+// const asset: Asset | undefined = entries.includes?.Asset?.find(
+//   (asset: Asset) => asset?.sys?.id === item?.fields?.gambar?.sys?.id
+// );
+
+// const imageURL: string | null = typeof asset?.fields?.file?.url === 'string' ? asset.fields.file.url : null;
+
+// Set metadata for the page
+const metadata = {
+  title: item.fields.judul,
+};
+
+// Extract fields for rendering in the Content component
+const {
+  judul,
+  deskripsi,
+  gambar,
+  tanggal,
+  tags,
+}: { judul: string; deskripsi: string; gambar: Asset | UnresolvedLink<'Asset'>; tanggal: string; tags: string[] } =
+  item.fields;
+---
+
+<Layout metadata={metadata}>
+  <section class="py-8 sm:py-16 lg:py-20 mx-auto">
+    <article>
+      <header class="intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade">
+        1
+        <div class="flex justify-between flex-col sm:flex-row max-w-3xl mx-auto mt-0 mb-2 px-4 sm:px-6 sm:items-center">
+          <p>
+            <Icon name="tabler:clock" class="w-4 h-4 inline-block -mt-0.5 dark:text-gray-400" />
+            <time datetime={String(tanggal)} class="inline-block">{getFormattedDate(new Date(tanggal))}</time>
+          </p>
+        </div>
+
+        <h1
+          class="px-4 sm:px-6 max-w-3xl mx-auto text-4xl md:text-5xl font-bold leading-tighter tracking-tighter font-heading"
+        >
+          {judul}
+        </h1>
+        <article
+          class="max-w-3xl mx-auto mt-4 mb-8 px-4 sm:px-6 text-xl md:text-2xl text-muted dark:text-slate-400 text-justify"
+          set:html={deskripsi.replace(/\n/g, '<br>')}
+        />
+        <img
+          src={'fields' in gambar && gambar.fields.file && typeof gambar.fields.file.url === 'string' ? gambar.fields.file.url : ''}
+          class="max-w-full lg:max-w-[900px] mx-auto mb-6 sm:rounded-md bg-gray-400 dark:bg-slate-700"
+          width={400}
+          sizes="(max-width: 900px) 400px, 900px"
+          alt={deskripsi || ''}
+          width={900}
+          height={506}
+          loading="eager"
+          decoding="async"
+        />
+      </header>
+      <div
+        class="mx-auto px-6 sm:px-6 max-w-3xl prose prose-md lg:prose-xl dark:prose-invert dark:prose-headings:text-slate-300 prose-headings:font-heading prose-headings:leading-tighter prose-headings:tracking-tighter prose-headings:font-bold prose-a:text-primary dark:prose-a:text-blue-400 prose-img:rounded-md prose-img:shadow-lg mt-8 prose-headings:scroll-mt-[80px] prose-li:my-0"
+      >
+        <slot />
+      </div>
+      <div class="mx-auto px-6 sm:px-6 max-w-3xl mt-8 flex justify-between flex-col sm:flex-row">
+        <ul class="mr-5 rtl:mr-0 rtl:ml-5">
+          {
+            tags.map((tag) => (
+              <li class="bg-gray-100 dark:bg-slate-700 inline-block mr-2 rtl:mr-0 rtl:ml-2 mb-2 py-0.5 px-2 lowercase font-medium">
+                <a
+                  class="text-muted
+                  dark:text-slate-300 hover:text-primary dark:hover:text-gray-200"
+                >
+                  {tag}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        <!-- <SocialShare url={url} text={judul} class="mt-5 sm:mt-1 align-middle text-gray-500 dark:text-slate-600" /> -->
+      </div>
+    </article>
+  </section>
+
+  <!-- <ToBlogLink />
+
+  <BlogHighlightedPosts
+    classes={{
+      container:
+        'pt-0 lg:pt-0 md:pt-0 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade',
+    }}
+    title="Related Posts"
+    linkText="View All Posts"
+    linkUrl={getBlogPermalink()}
+    postIds={relatedPosts.map((post) => post.id)}
+  /> -->
+</Layout>

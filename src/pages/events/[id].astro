@@ -71,13 +71,11 @@ if (!entries.items.length) {
 // Get the first item (as we are only fetching a single entry with this id)
 const item = entries.items[0];
 
-// Fetch the associated asset (if it exists)
-const asset: Asset | undefined = entries.includes?.Asset?.find(
-  (asset: Asset) => asset?.sys?.id === item?.fields?.gambar?.sys?.id
-);
+// const asset: Asset | undefined = entries.includes?.Asset?.find(
+//   (asset: Asset) => asset?.sys?.id === item?.fields?.gambar?.sys?.id
+// );
 
-// Safely access the image URL
-const imageURL: string | null = typeof asset?.fields?.file?.url === 'string' ? asset.fields.file.url : null;
+// const imageURL: string | null = typeof asset?.fields?.file?.url === 'string' ? asset.fields.file.url : null;
 
 // Set metadata for the page
 const metadata = {
@@ -88,30 +86,12 @@ const metadata = {
 const {
   judul,
   deskripsi,
+  gambar,
   tanggal,
   tags,
 }: { judul: string; deskripsi: string; gambar: Asset | UnresolvedLink<'Asset'>; tanggal: string; tags: string[] } =
   item.fields;
 ---
-
-<Layout metadata={metadata}>
-  <!-- Content Section -->
-  <Content
-    image={{
-      src: imageURL,
-      alt: 'Edutainment Image',
-      loading: 'eager',
-    }}
-  >
-    <Fragment slot="content">
-      <h2 class="text-2xl text-center font-bold tracking-tight dark:text-white sm:text-3xl mb-2">{judul}</h2>
-    </Fragment>
-
-    <Fragment slot="bg">
-      <div class="absolute inset-0"></div>
-    </Fragment>
-  </Content>
-</Layout>
 
 <Layout metadata={metadata}>
   <section class="py-8 sm:py-16 lg:py-20 mx-auto">
@@ -135,7 +115,7 @@ const {
           set:html={deskripsi.replace(/\n/g, '<br>')}
         />
         <img
-          src={imageURL}
+          src={'fields' in gambar && gambar.fields.file && typeof gambar.fields.file.url === 'string' ? gambar.fields.file.url : ''}
           class="max-w-full lg:max-w-[900px] mx-auto mb-6 sm:rounded-md bg-gray-400 dark:bg-slate-700"
           width={400}
           sizes="(max-width: 900px) 400px, 900px"

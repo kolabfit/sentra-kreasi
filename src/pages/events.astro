@@ -1,0 +1,26 @@
+---
+import type { InferGetStaticPropsType, GetStaticPaths } from 'astro';
+
+import Layout from '~/layouts/PageLayout.astro';
+import BlogList from '~/components/blog/List.astro';
+import Headline from '~/components/blog/Headline.astro';
+import Pagination from '~/components/blog/Pagination.astro';
+// import PostTags from "~/components/blog/Tags.astro";
+
+import { blogListRobots, getStaticPathsBlogList } from '~/utils/blog';
+import EventsList from '~/components/contentfulComponents/EventsList.astro';
+
+const metadata = {
+  title: `Events`,
+};
+---
+
+<Layout metadata={metadata}>
+  <section class="px-6 sm:px-6 py-12 sm:py-16 lg:py-20 mx-auto max-w-4xl">
+    <Headline
+      title="Events"
+      subtitle="Cek event - event menarik dari kami"
+    />
+    <EventsList />
+  </section>
+</Layout>

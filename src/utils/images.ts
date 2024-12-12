@@ -8,7 +8,7 @@ const load = async function () {
     images = import.meta.glob('~/assets/images/**/*.{jpeg,jpg,png,tiff,webp,gif,svg,JPEG,JPG,PNG,TIFF,WEBP,GIF,SVG}');
   } catch (error) {
     console.error('Error loading images:', error);
-  }  
+  }
   return images;
 };
 
@@ -83,9 +83,7 @@ export const adaptOpenGraphImages = async (
             typeof resolvedImage !== 'string' && resolvedImage?.width <= defaultWidth
               ? [resolvedImage?.width, resolvedImage?.height]
               : [defaultWidth, defaultHeight];
-          _image = (
-            await astroAsseetsOptimizer(resolvedImage, [dimensions[0]], dimensions[0], dimensions[1], 'jpg')
-          )[0];
+          _image = (await astroAsseetsOptimizer(resolvedImage, [dimensions[0]], dimensions[0], dimensions[1], 'jpg'))[0];
         }
 
         if (typeof _image === 'object') {

@@ -1,0 +1,111 @@
+---
+import type { Asset, EntryFieldTypes } from 'contentful';
+import { contentfulClient } from '~/lib/contentful';
+
+import { Icon } from 'astro-icon/components';
+import { getPermalink } from '~/utils/permalinks';
+
+interface ArticleItemType {
+  contentTypeId: string;
+  fields: {
+    idHalaman: EntryFieldTypes.Text;
+    judul: EntryFieldTypes.Text;
+    deskripsi: EntryFieldTypes.Text;
+    gambar: EntryFieldTypes.AssetLink;
+    tanggal: EntryFieldTypes.Date;
+    tags: EntryFieldTypes.Text[];
+  };
+}
+
+// Fetch the entry and include linked assets
+const entries = await contentfulClient.getEntries<ArticleItemType>({
+  content_type: 'artikelItemType',
+});
+
+function truncateString(str: string, length: number = 60): string {
+  if (!str || str.length <= length) {
+    return str;
+  }
+  return str.substring(0, length) + '...';
+}
+
+const ContentItems = entries.items.map((item) => {
+  const imageAsset: Asset | undefined = entries.includes?.Asset?.find(
+    (asset: Asset) => asset?.sys?.id === item?.fields?.gambar?.sys?.id
+  );
+
+  const imageURL: string | null = typeof imageAsset?.fields?.file?.url === 'string' ? imageAsset.fields.file.url : null;
+
+  return {
+    id: item.fields.idHalaman,
+    title: item.fields.judul,
+    description: truncateString(item.fields.deskripsi),
+    image: { src: imageURL, alt: item.fields.judul },
+    publishDate: item.fields.tanggal,
+    tags: Array.isArray(item.fields.tags) ? item.fields.tags : [],
+  };
+});
+---
+
+<ul>
+  {
+    ContentItems.map((post) => (
+      <li class="mb-12 md:mb-20">
+        <article
+          class={`max-w-md mx-auto md:max-w-none grid gap-6 md:gap-8 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade md:grid-cols-2`}
+        >
+          <a class="relative block group" href={getPermalink(`/events/${post.id}`)}>
+            <div class="relative h-0 pb-[56.25%] md:pb-[75%] md:h-72 lg:pb-[56.25%] overflow-hidden bg-gray-400 dark:bg-slate-700 rounded shadow-lg">
+              <img
+                src={post.image.src}
+                class="absolute inset-0 object-cover w-full h-full mb-6 rounded shadow-lg bg-gray-400 dark:bg-slate-700"
+                width={900}
+                sizes="(max-width: 900px) 400px, 900px"
+              />
+            </div>
+          </a>
+          <div class="mt-2">
+            <header>
+              <div class="mb-1">
+                <span class="text-sm">
+                  <Icon name="tabler:clock" class="w-3.5 h-3.5 inline-block -mt-0.5 dark:text-gray-400" />
+                  <time datetime={String(post.publishDate)} class="inline-block">
+                    {post.publishDate}
+                  </time>
+                </span>
+              </div>
+              <h2 class="text-xl sm:text-2xl font-bold leading-tight mb-2 font-heading dark:text-slate-300">
+                {post.id ? (
+                  <a
+                    class="inline-block hover:text-primary dark:hover:text-blue-700 transition ease-in duration-200"
+                    href={getPermalink('/events/' + post.id)}
+                  >
+                    {post.title}
+                  </a>
+                ) : (
+                  post.title
+                )}
+              </h2>
+            </header>
+
+            {post.description && <p class="flex-grow text-muted dark:text-slate-400 text-lg">{post.description}</p>}
+            <footer class="mt-5">
+              <ul class="text-sm">
+                {post.tags.map((tag) => (
+                  <li class="bg-gray-100 dark:bg-slate-700 inline-block mr-2 rtl:mr-0 rtl:ml-2 mb-2 py-0.5 px-2 lowercase font-medium">
+                    <a
+                      class="text-muted
+                          dark:text-slate-300 hover:text-primary dark:hover:text-gray-200"
+                    >
+                      {tag}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </footer>
+          </div>
+        </article>
+      </li>
+    ))
+  }
+</ul>

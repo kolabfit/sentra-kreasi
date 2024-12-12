@@ -9,6 +9,9 @@ import mdx from '@astrojs/mdx';
 import partytown from '@astrojs/partytown';
 import icon from 'astro-icon';
 import compress from 'astro-compress';
+
+import cloudflare from '@astrojs/cloudflare';
+
 import type { AstroIntegration } from 'astro';
 
 import astrowind from './vendor/integration';
@@ -22,9 +25,11 @@ const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroInteg
   hasExternalScripts ? (Array.isArray(items) ? items.map((item) => item()) : [items()]) : [];
 
 export default defineConfig({
-  output: 'static',
+  
+  output: 'hybrid',
 
   integrations: [
+
     tailwind({
       applyBaseStyles: false,
     }),
@@ -72,9 +77,7 @@ export default defineConfig({
   ],
 
   image: {
-    service: {
-      entrypoint: 'astro/assets/services/sharp'
-    }
+    domains: ['cdn.pixabay.com'],
   },
 
   markdown: {
@@ -83,9 +86,16 @@ export default defineConfig({
   },
 
   vite: {
-    plugins: [],
-    assetsInclude: ['**/*.png'], // Ini akan memastikan file PNG diproses
-  }
+    resolve: {
+      alias: {
+        '~': path.resolve(__dirname, './src'),
+      },
+    },
+    ssr: {
+      noExternal: ['linkedom'],
+      external: ['linkedom'],
+    },
+  },
 
-  
+  adapter: cloudflare(),
 });

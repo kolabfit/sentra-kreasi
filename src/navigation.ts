@@ -12,11 +12,11 @@ export const headerData = {
     },
     {
       text: 'Artikel',
-      href: getPermalink('/blog'),
+      href: getPermalink('/articles'),
     },
     {
       text: 'Events',
-      href: getPermalink('/tags'),
+      href: getPermalink('/events'),
     },
     {
       text: 'Hubungi Kami',
@@ -40,11 +40,11 @@ export const footerData = {
         },
         {
           text: 'Artikel',
-          href: getPermalink('/blog'),
+          href: getPermalink('/articles'),
         },
         {
           text: 'Events',
-          href: getPermalink('/tags'),
+          href: getPermalink('/events'),
         },
         {
           text: 'Hubungi Kami',

@@ -11,6 +11,9 @@ import jembar from '~/assets/images/Jembar.jpg';
 import kangyuda from '~/assets/images/KangYuda.jpg';
 import kangdudy from '~/assets/images/KangDudy.jpg';
 import waiyus from '~/assets/images/WaIyus.jpg';
+import TeamList from '~/components/contentfulComponents/TeamList.astro';
+import Headline from '~/components/ui/Headline.astro';
+import WhatWeDoList from '~/components/contentfulComponents/WhatWeDoList.astro';
 
 //impor gambar
 // import logosentra from '../assets/images/logosentra.png';
@@ -35,7 +38,7 @@ const metadata = {
     </Fragment>
 
     <Fragment slot="subtitle">
-      UMKM Sentra Kreasi Bandung didirikan pada tahun [tahun pendirian] sebagai wadah untuk memperkuat dan mempromosikan
+      UMKM Sentra Kreasi Bandung didirikan pada tahun 2018 sebagai wadah untuk memperkuat dan mempromosikan
       karya dan kreasi UMKM di Kabupaten Bandung. Kami berkomitmen untuk membantu para pengusaha lokal mengembangkan
       bisnis mereka dan memperkenalkan produk-produk unik Kabupaten Bandung ke pasar yang lebih luas.
     </Fragment>
@@ -43,70 +46,15 @@ const metadata = {
 
   <!-- Steps2 Widget ****************** -->
 
-  <Steps2
+  <WhatWeDoList
     title="Apa yang Kami Lakukan"
-    subtitle="Maecenas eu tellus eget est scelerisque lacinia et a diam. Aliquam velit lorem, vehicula id fermentum et, rhoncus et purus. Nulla facilisi. Vestibulum malesuada lacus."
-    items={[
-      {
-        title: 'Customer-centric approach',
-        description:
-          'Donec id nibh neque. Quisque et fermentum tortor. Fusce vitae dolor a mauris dignissim commodo. Ut eleifend luctus condimentum.',
-      },
-      {
-        title: 'Constant Improvement',
-        description:
-          'Phasellus laoreet fermentum venenatis. Vivamus dapibus pulvinar arcu eget mattis. Fusce eget mauris leo.',
-      },
-      {
-        title: 'Ethical Practices',
-        description:
-          'Vestibulum imperdiet libero et lectus molestie, et maximus augue porta. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.',
-      },
-    ]}
   />
 
   <!-- Features2 Widget ************** -->
 
-  <Features2
-    title="Tim Kami"
+  <Headline title='Tim Kami' subtitle='' tagline=''' />
+  <TeamList
     columns={3}
-    items={[
-      {
-        title: 'Defi Fahrur',
-        description:
-          'Rutrum non odio at vehicula. Proin ipsum justo, dignissim in vehicula sit amet, dignissim id quam. Sed ac tincidunt sapien.',
-        image: defi,
-      },
-      {
-        title: 'Asep Kurniawan',
-        description:
-          'Nullam efficitur volutpat sem sed fringilla. Suspendisse et enim eu orci volutpat laoreet ac vitae libero.',
-        image: asep,
-      },
-      {
-        title: 'Jembar',
-        description:
-          'Morbi et elit finibus, facilisis justo ut, pharetra ipsum. Donec efficitur, ipsum quis congue luctus, mauris magna.',
-        image: jembar,
-      },
-      {
-        title: 'Kang Dudy',
-        description:
-          'Suspendisse vitae nisi eget tortor luctus maximus sed non lectus. Cras malesuada pretium placerat. Nullam venenatis dolor a ante rhoncus.',
-        image: kangdudy,
-      },
-      {
-        title: 'Kang Yuda',
-        description:
-          'Suspendisse vitae nisi eget tortor luctus maximus sed non lectus. Cras malesuada pretium placerat. Nullam venenatis dolor a ante rhoncus.',
-        image: kangyuda,
-      },
-      {
-        title: 'Wa Iyus',
-        description:
-          'Suspendisse vitae nisi eget tortor luctus maximus sed non lectus. Cras malesuada pretium placerat. Nullam venenatis dolor a ante rhoncus.',
-        image: waiyus,
-      },
-    ]}
-  /></Layout
+  />
+  </Layout
 >

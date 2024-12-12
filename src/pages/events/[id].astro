@@ -140,7 +140,7 @@ const {
       </div>
       <div class="mx-auto px-6 sm:px-6 max-w-3xl mt-8 flex justify-between flex-col sm:flex-row">
         <ul class="mr-5 rtl:mr-0 rtl:ml-5">
-          {
+          {Array.isArray(tags) &&
             tags.map((tag) => (
               <li class="bg-gray-100 dark:bg-slate-700 inline-block mr-2 rtl:mr-0 rtl:ml-2 mb-2 py-0.5 px-2 lowercase font-medium">
                 <a
@@ -150,8 +150,7 @@ const {
                   {tag}
                 </a>
               </li>
-            ))
-          }
+            ))}          
         </ul>
         <!-- <SocialShare url={url} text={judul} class="mt-5 sm:mt-1 align-middle text-gray-500 dark:text-slate-600" /> -->
       </div>

@@ -82,16 +82,22 @@ const metadata = {
   title: item.fields.judul,
 };
 
-const desc = item.fields.deskripsi.replace(/\n/g, '<br>');
+// Safeguard against missing or undefined deskripsi
+const desc = (item.fields.deskripsi || '').replace(/\n/g, '<br>');
 
-// Extract fields for rendering in the Content component
+// Ensure all necessary fields are present
 const {
   judul,
   gambar,
   tanggal,
   tags,
-}: { judul: string; deskripsi: string; gambar: Asset | UnresolvedLink<'Asset'>; tanggal: string; tags: string[] } =
-  item.fields;
+}: { 
+  judul: string; 
+  deskripsi?: string; 
+  gambar: Asset | UnresolvedLink<'Asset'>; 
+  tanggal: string; 
+  tags: string[]; 
+} = item.fields;
 ---
 
 <Layout metadata={metadata}>

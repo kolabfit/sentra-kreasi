@@ -37,7 +37,7 @@ export const headerData = {
       href: getPermalink('/about'),
     },
     {
-      text: 'Artikel',
+      text: 'Artikels',
       href: getPermalink('/article'),
     },
     {
@@ -65,7 +65,7 @@ export const footerData = {
           href: getPermalink('/about'),
         },
         {
-          text: 'Artikel',
+          text: 'Artikels',
           href: getPermalink('/article'),
         },
         {

@@ -111,16 +111,15 @@ const {
             <time datetime={String(tanggal)} class="inline-block">{tanggal}</time>
           </p>
         </div>
-
         <h1
-          class="px-4 sm:px-6 max-w-3xl mx-auto text-4xl md:text-5xl font-bold leading-tighter tracking-tighter font-heading"
+          class="px-4 sm:px-6 py-7 max-w-3xl mx-auto text-4xl md:text-5xl font-bold leading-tighter tracking-tighter font-heading"
         >
           {judul}
         </h1>
         <img
           src={'fields' in gambar && gambar.fields.file && typeof gambar.fields.file.url === 'string' ? gambar.fields.file.url : ''}
           class="max-w-full lg:max-w-[900px] mx-auto mb-6 sm:rounded-md bg-gray-400 dark:bg-slate-700"
-          width={400}
+          width={900}
           sizes="(max-width: 900px) 400px, 900px"
           alt={judul || ''}
           width={900}
@@ -128,11 +127,11 @@ const {
           loading="eager"
           decoding="async"
         />
+        <article
+          class="max-w-3xl mx-auto py-5 mt-4 mb-8 px-4 sm:px-6 text-xl md:text-2xl text-muted dark:text-slate-400 text-justify"
+          set:html={desc}
+        />
       </header>
-      <article
-        class="max-w-3xl mx-auto mt-4 mb-8 px-4 sm:px-6 text-xl md:text-2xl text-muted dark:text-slate-400 text-justify"
-        set:html={desc}
-      />
       <div
         class="mx-auto px-6 sm:px-6 max-w-3xl prose prose-md lg:prose-xl dark:prose-invert dark:prose-headings:text-slate-300 prose-headings:font-heading prose-headings:leading-tighter prose-headings:tracking-tighter prose-headings:font-bold prose-a:text-primary dark:prose-a:text-blue-400 prose-img:rounded-md prose-img:shadow-lg mt-8 prose-headings:scroll-mt-[80px] prose-li:my-0"
       >

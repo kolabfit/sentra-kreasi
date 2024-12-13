@@ -111,16 +111,15 @@ const {
             <time datetime={String(tanggal)} class="inline-block">{tanggal}</time>
           </p>
         </div>
-
         <h1
-          class="px-4 sm:px-6 max-w-3xl mx-auto text-4xl md:text-5xl font-bold leading-tighter tracking-tighter font-heading"
+          class="px-4 sm:px-6 py-7 max-w-3xl mx-auto text-4xl md:text-5xl font-bold leading-tighter tracking-tighter font-heading"
         >
           {judul}
         </h1>
         <img
           src={'fields' in gambar && gambar.fields.file && typeof gambar.fields.file.url === 'string' ? gambar.fields.file.url : ''}
           class="max-w-full lg:max-w-[900px] mx-auto mb-6 sm:rounded-md bg-gray-400 dark:bg-slate-700"
-          width={400}
+          width={900}
           sizes="(max-width: 900px) 400px, 900px"
           alt={judul || ''}
           width={900}
@@ -129,7 +128,7 @@ const {
           decoding="async"
         />
         <article
-          class="max-w-3xl mx-auto mt-4 mb-8 px-4 sm:px-6 text-xl md:text-2xl text-muted dark:text-slate-400 text-justify"
+          class="max-w-3xl mx-auto py-5 mt-4 mb-8 px-4 sm:px-6 text-xl md:text-2xl text-muted dark:text-slate-400 text-justify"
           set:html={desc}
         />
       </header>

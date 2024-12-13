@@ -17,6 +17,7 @@ import kaos from '~/assets/images/peci.png';
 import dompet from '~/assets/images/dompet.png';
 import Maps from '~/components/widgets/Maps.astro';
 import Headline from '~/components/ui/Headline.astro';
+import ProductContents from '~/components/contentfulComponents/ProductContents.astro';
 // import { string } from 'astro:schema';
 
 const metadata = {
@@ -51,71 +52,20 @@ const metadata = {
     }}
   />
 
-  <!-- Content Widget **************** -->
+  <!-- Produk Content -->
 
-  <Content
-    items={[
-      {
-        title: 'Produsen peci Manis HM TOHA Original Bandung, Pastikan peci manis anda asli.',
-        description: 'Peci Manis HM TOHA Original Bandung merupakan produk unggulan dari Sentra Kreasi yang dirancang khusus untuk memenuhi kebutuhan aksesoris kepala bagi para pria muslim. Dengan desain yang elegan dan kualitas terbaik, peci ini dijamin akan memberikan kesan yang tak terlupakan bagi pemakainya.',
-      },
-    ]}
-    image={{ src: peci, alt: 'peci' }}
-  >
-  </Content>
+  <ProductContents
+    id="produk-ukm"
+    isDark={false}
+   />
 
-  <!-- Content Widget **************** -->
-
-  <Content
-    isReversed
-    isAfterContent
-    items={[
-      {
-        title: 'Sorban Permanen dan Ikat Kepala',
-        description: 'Sorban Permanen dan Ikat Kepala merupakan produk unggulan dari Sentra Kreasi yang dirancang khusus untuk memenuhi kebutuhan aksesoris kepala bagi para pria muslim. Dengan desain yang elegan dan kualitas terbaik, sorban ini dijamin akan memberikan kesan yang tak terlupakan bagi pemakainya.',
-      },
-    ]}
-    image={{ src: sorban, alt: 'sorban' }}
-  >
-  </Content>
-
-  <!-- Content Widget **************** -->
-
-  <Content
-    isAfterContent
-    items={[
-      {
-        title: 'Souvenir Pernikahan - Allure',
-        description: 'Souvenir Pernikahan - Allure merupakan produk unggulan dari Sentra Kreasi yang dirancang khusus untuk memenuhi kebutuhan souvenir pernikahan yang elegan dan eksklusif. Dengan desain yang menawan dan kualitas terbaik, souvenir ini dijamin akan memberikan kesan yang tak terlupakan bagi para tamu undangan.',
-      },
-    ]}
-    image={{ src: dompet, alt: 'dompet' }}
-  >
-  </Content>
-
-  <Content
-    isReversed
-    isAfterContent
-    items={[
-      {
-        title: 'Kaos Polos Bandung',
-        description: 'Kaos Berkualitas Harga Pas. 100% Made In Bandung',
-      },
-    ]}
-    image={{ src: kaos, alt: 'kaos' }}
-  >
-  </Content>
-
-  <!-- Features2 Widget ************** -->
+  <!-- Home Events -->
 
   <Headline 
     title='Events' 
     subtitle='Event - event yang sudah diselenggarakan' 
     tagline='UKM SENTRA KREASI'/>
-  <HomeEvents
-    columns={2}
-  >
-
+  <HomeEvents columns={2}>
     <Fragment slot="more">
       <div class="mt-8 text-center">
         <a href="/tags" class="text-blue-600 hover:text-blue-800 font-semibold"> Lihat Semua Event </a>

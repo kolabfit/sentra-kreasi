@@ -3,6 +3,7 @@ import Layout from '~/layouts/PageLayout.astro';
 import HeroText from '~/components/widgets/HeroText.astro';
 import ContactUs from '~/components/widgets/Contact.astro';
 import Features2 from '~/components/widgets/Features2.astro';
+import ContactList from '~/components/contentfulComponents/ContactList.astro';
 
 const metadata = {
   title: 'Kontak',
@@ -33,21 +34,10 @@ const metadata = {
     }}
   />
 
-  <!-- Features2 Widget ************** -->
+  <!-- Contacts -->
 
-  <Features2
-    columns= {2}
-    items={[
-      {
-        title: 'Alamat',
-        description: ' Jl. Raya Banjaran KM 14, Gg. Kesehatan No 124, RT 05/ RW 06, Desa Sukasari, Kec. Pameungpeuk Bandung',
-        icon: 'tabler:map',
-      },
-      {
-        title: 'No Telepon',
-        description: '+628121425046',
-        icon: 'tabler:phone',
-      },
-    ]}
+  <ContactList
+    id="contact-list"
+    isDark={false}
   />
 </Layout>

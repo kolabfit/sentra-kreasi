@@ -8,7 +8,6 @@ const {
   items = [],
   columns = 2,
   defaultIcon = '',
-  // classes = {},
 } = Astro.props as ItemGrid;
 
 const defaultIconClass = 'text-primary'; // Define it separately
@@ -20,35 +19,52 @@ const defaultIconClass = 'text-primary'; // Define it separately
       columns === 4
         ? 'lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2'
         : columns === 3
-          ? 'lg:grid-cols-3 sm:grid-cols-2'
-          : columns === 2
-            ? 'sm:grid-cols-2'
-            : ''
+        ? 'lg:grid-cols-3 sm:grid-cols-2'
+        : columns === 2
+        ? 'sm:grid-cols-2'
+        : ''
     }`,
   )}
 >
-  {
-    items.map(({ title, description, icon, image, callToAction, classes: itemClasses = {} }) => (
-      <div
+  {items.map(({ title, description, icon, image, callToAction, link, classes: itemClasses = {} }) => {
+    const Wrapper = link ? 'a' : 'div'; // Determine the wrapper element
+
+    return (
+      <Wrapper
+        href={link || undefined}
         class={twMerge(
           'relative flex flex-col intersect-once intersect-quarter intercept-no-queue motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade',
           'bg-white dark:bg-slate-900 rounded-lg shadow-md p-6',
-          'flex flex-col justify-between items-center h-full min-h-[200px]', // Tambahkan min-height di sini
+          'flex flex-col justify-between items-center h-full min-h-[200px]', // Ensure consistent height
           itemClasses?.panel
         )}
+        {...(link && { target: '_blank', rel: 'noopener noreferrer' })} 
       >
         <div class="flex flex-col items-center text-center w-full">
           {(icon || defaultIcon) && (
-            <Icon name={icon || defaultIcon} class={twMerge('mb-4 w-10 h-10', defaultIconClass, itemClasses?.icon)} />
+            <Icon
+              name={icon || defaultIcon}
+              class={twMerge('mb-4 w-10 h-10', defaultIconClass, itemClasses?.icon)}
+            />
           )}
           {image && (
             <div class="mb-4 flex justify-center">
-              <img src={image?.src} width="550" height="130" style="max-height: 200px; object-fit: cover" alt={image?.alt || ''} class="rounded" />
+              <img
+                src={image?.src}
+                width="550"
+                height="130"
+                style="max-height: 200px; object-fit: cover"
+                alt={image?.alt || ''}
+                class="rounded"
+              />
             </div>
           )}
           <div class={twMerge('text-xl font-bold mb-2', itemClasses?.title)}>{title}</div>
           {description && (
-            <p class={twMerge('text-muted mt-2', itemClasses?.description)} set:html={description} />
+            <p
+              class={twMerge('text-muted mt-2', itemClasses?.description)}
+              set:html={description}
+            />
           )}
         </div>
         {callToAction && (
@@ -56,7 +72,7 @@ const defaultIconClass = 'text-primary'; // Define it separately
             <Button {...callToAction} />
           </div>
         )}
-      </div>
-    ))
-  }
+      </Wrapper>
+    );
+  })}
 </div>

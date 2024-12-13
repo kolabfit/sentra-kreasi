@@ -18,6 +18,7 @@ import dompet from '~/assets/images/dompet.png';
 import Maps from '~/components/widgets/Maps.astro';
 import Headline from '~/components/ui/Headline.astro';
 import ProductContents from '~/components/contentfulComponents/ProductContents.astro';
+import ContactList from '~/components/contentfulComponents/ContactList.astro';
 // import { string } from 'astro:schema';
 
 const metadata = {
@@ -78,23 +79,15 @@ const metadata = {
     subtitle="Kunjungi Kami"
   />
 
+  <!-- Maps Widget -->
+
   <Maps />
 
-  <Features2
-    columns={2}
-    items={[
-      {
-        title: 'Alamat',
-        description:
-          'Jl. Raya Banjaran KM 14, Gg. Kesehatan No 124, RT 05/ RW 06, Desa Sukasari, Kec. Pameungpeuk Bandung',
-        icon: 'tabler:location',
-      },
-      {
-        title: 'Call us',
-        description: 'WA : 089611284382',
-        icon: 'tabler:phone',
-      },
-    ]}
+  <!-- Contacts -->
+
+  <ContactList
+    id="contact-list"
+    isDark={false}
   />
 
   <!-- CallToAction Widget *********** -->

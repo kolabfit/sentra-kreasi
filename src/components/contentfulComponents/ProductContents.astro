@@ -1,9 +1,5 @@
 ---
-import type { Content as Props } from '~/types';
-import WidgetWrapper from '../ui/WidgetWrapper.astro';
 import Image from '~/components/common/Image.astro';
-import Button from '~/components/ui/Button.astro';
-import ItemGrid from '../ui/ItemGrid.astro';
 import type { Asset, EntryFieldTypes } from 'contentful';
 import { contentfulClient } from '~/lib/contentful';
 
@@ -47,11 +43,8 @@ function shuffleArray(array: any[]): any[] {
 const randomizedItems = shuffleArray(ContentItems);
 
 console.log(randomizedItems);
-
-const { id, isDark = false, classes = {} } = Astro.props;
 ---
 
-<WidgetWrapper id={id} isDark={isDark} containerClass={`max-w-7xl mx-auto ${classes.container ?? ''}`}>
   <div class="mx-auto max-w-7xl p-4 md:px-8">
     {
       randomizedItems.length > 0 ? (
@@ -75,4 +68,3 @@ const { id, isDark = false, classes = {} } = Astro.props;
       )
     }
   </div>
-</WidgetWrapper>

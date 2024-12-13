@@ -26,6 +26,7 @@ interface EventItemType {
 // Fetch the entry and include linked assets
 const entries = await contentfulClient.getEntries<EventItemType>({
   content_type: 'eventItemType',
+  limit: 4,
 });
 
 function truncateString(str: string, length: number = 60): string {

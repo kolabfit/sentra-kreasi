@@ -2,12 +2,13 @@
 import Image from '~/components/common/Image.astro';
 import type { Asset, EntryFieldTypes } from 'contentful';
 import { contentfulClient } from '~/lib/contentful';
+import { marked } from 'marked';
 
 interface ProdukType {
   contentTypeId: string;
   fields: {
     namaProduk: EntryFieldTypes.Text;
-    deskripsi: EntryFieldTypes.Text;
+    deskripsi: EntryFieldTypes.RichText;
     gambar: EntryFieldTypes.AssetLink;
   };
 }
@@ -52,8 +53,8 @@ const randomizedItems = shuffleArray(ContentItems);
           return (
             <div class={`md:flex ${isReversed ? 'md:flex-row-reverse' : ''} md:gap-16 mb-8`}>
               <div class="md:basis-1/2 self-center">
-                <h3 class="text-xl font-bold">{item.title}</h3>
-                <p>{item.description}</p>
+                <h1 class="font-bold py-5 leading-tighter tracking-tighter font-heading text-heading text-3xl md:text-4xl">{item.title}</h1>
+                <p class="text-muted dark:text-slate-400 m-2 rtl:ml-0 rtl:mr-2 text-justify" set:html={marked(item.description)}></p>
               </div>
               <div class="md:basis-1/2">
                 <Image 

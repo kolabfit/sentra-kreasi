@@ -1,0 +1,20 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import Headline from '~/components/ui/Headline.astro';
+import RepoList from '~/components/contentfulComponents/RepoList.astro';
+
+const metadata = {
+  title: 'Repository',
+};
+---
+
+<Layout metadata={metadata}>
+  <Headline
+    title="Repository"
+    subtitle="Cek repository kami"
+  />
+  
+  <RepoList columns={2}>
+  </RepoList>
+
+</Layout>

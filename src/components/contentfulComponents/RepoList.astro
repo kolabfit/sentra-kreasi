@@ -1,0 +1,89 @@
+---
+import WidgetWrapper from '~/components/ui/WidgetWrapper.astro';
+import Headline from '~/components/ui/Headline.astro';
+import ItemGrid3 from '~/components/ui/ItemGrid3.astro';
+import type { Asset, EntryFieldTypes } from 'contentful';
+import { contentfulClient } from '~/lib/contentful';
+import { marked } from 'marked';
+
+
+const {
+  columns = 2,
+
+  id,
+  isDark = false,
+  classes = {},
+  bg = await Astro.slots.render('bg'),
+} = Astro.props;
+
+interface EventItemType {
+  contentTypeId: string;
+  fields: {
+    judul: EntryFieldTypes.Text;
+    gambar: EntryFieldTypes.AssetLink;
+    deskripsi: EntryFieldTypes.Text;
+    linkRepository: EntryFieldTypes.Text;
+  };
+}
+
+// Fetch the entry and include linked assets
+const entries = await contentfulClient.getEntries<EventItemType>({
+  content_type: 'repositoryType',
+  limit: 4,
+});
+
+function truncateString(str: string, length: number = 200): string {
+  if (!str || str.length <= length) {
+    return str;
+  }
+  return str.substring(0, length) + '...';
+}
+
+const ContentItems = entries.items.map((item) => {
+  const imageAsset: Asset | undefined = entries.includes?.Asset?.find(
+    (asset: Asset) => asset?.sys?.id === item?.fields?.gambar?.sys?.id
+  );
+
+  const imageURL: string | null = typeof imageAsset?.fields?.file?.url === 'string' ? imageAsset.fields.file.url : null;
+
+  return {
+    title: item.fields.judul,
+    description: truncateString(marked.parse(item.fields.deskripsi) as string),
+    image: { src: imageURL, alt: item.fields.judul },
+    link: item.fields.linkRepository,
+  };
+});
+
+function shuffleArray(array: any[]): any[] {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+const randomizedItems = shuffleArray(ContentItems);
+---
+
+<WidgetWrapper id={id} isDark={isDark} containerClass={`max-w-7xl mx-auto ${classes?.container ?? ''}`} bg={bg}>
+  <div class="flex justify-center items-center w-full">
+    <ItemGrid3
+      items={randomizedItems}
+      columns={columns}
+      classes={{
+        container: 'gap-4 md:gap-6 flex justify-center items-center',
+        panel:
+          'rounded-lg shadow-[0_4px_30px_rgba(0,0,0,0.1)] dark:shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur border border-[#ffffff29] bg-white dark:bg-slate-900 p-6 text-center flex flex-col items-center justify-center w-full h-full',
+        title: 'text-center',
+        deskripsi: 'text-center',
+        image: 'mx-auto w-full rounded-lg bg-gray-500 shadow-lg',
+        ...((classes?.items as {}) ?? {}),
+      }}
+    />
+  </div>
+
+  {/* Tambahkan slot "more" di sini */}
+  <div class="mt-8">
+    <slot name="more" />
+  </div>
+</WidgetWrapper>

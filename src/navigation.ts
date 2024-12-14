@@ -48,6 +48,10 @@ export const headerData = {
       text: 'Hubungi Kami',
       href: getPermalink('/contact'),
     },
+    {
+      text: 'Repository',
+      href: getPermalink('/repository'),
+    },
   ],
 };
 
@@ -75,6 +79,10 @@ export const footerData = {
         {
           text: 'Hubungi Kami',
           href: getPermalink('/contact'),
+        },
+        {
+          text: 'Repository',
+          href: getPermalink('/repository'),
         },
       ],
     },

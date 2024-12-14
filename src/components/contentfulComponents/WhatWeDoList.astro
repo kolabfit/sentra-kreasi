@@ -11,6 +11,7 @@ interface WhatWeDoType {
   contentTypeId: string;
   fields: {
     judul: EntryFieldTypes.Text;
+    logo: EntryFieldTypes.Text;
     deskripsi: EntryFieldTypes.Text;
   };
 }
@@ -23,6 +24,7 @@ const entries = await contentfulClient.getEntries<WhatWeDoType>({
 const ContentItems = entries.items.map((item) => {
   return {
     title: item.fields.judul,
+    icon: item.fields.logo,
     description: item.fields.deskripsi,
   };
 });
@@ -72,11 +74,14 @@ const {
       <ul class="space-y-10">
         {
           ContentItems && ContentItems.length
-            ? ContentItems.map(({ title, description }, index) => (
+            ? ContentItems.map(({ title, icon, description }, index) => (
                 <li class="flex md:-mx-4">
                   <div class="pr-4 sm:pl-4 rtl:pr-0 rtl:pl-4 rtl:sm:pl-0 rtl:sm:pr-4">
                     <span class="flex w-16 h-16 mx-auto items-center justify-center text-2xl font-bold rounded-full bg-blue-100 text-primary">
-                      {index + 1}
+                      <Icon
+                        name={icon || 'flat-color-icons:template'}
+                        class={'w-10 h-10'}
+                      />
                     </span>
                   </div>
                   <div class="pl-4 rtl:pl-0 rtl:pr-4">

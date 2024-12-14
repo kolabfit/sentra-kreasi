@@ -4,6 +4,8 @@ import Headline from '~/components/ui/Headline.astro';
 import ItemGrid2 from '~/components/ui/ItemGrid2.astro';
 import type { Asset, EntryFieldTypes } from 'contentful';
 import { contentfulClient } from '~/lib/contentful';
+import { marked } from 'marked';
+
 
 const {
   columns = 2,
@@ -17,6 +19,7 @@ const {
 interface EventItemType {
   contentTypeId: string;
   fields: {
+    idHalaman: EntryFieldTypes.Text;
     judul: EntryFieldTypes.Text;
     deskripsi: EntryFieldTypes.Text;
     gambar: EntryFieldTypes.AssetLink;
@@ -29,7 +32,7 @@ const entries = await contentfulClient.getEntries<EventItemType>({
   limit: 4,
 });
 
-function truncateString(str: string, length: number = 60): string {
+function truncateString(str: string, length: number = 200): string {
   if (!str || str.length <= length) {
     return str;
   }
@@ -45,8 +48,9 @@ const ContentItems = entries.items.map((item) => {
 
   return {
     title: item.fields.judul,
-    description: truncateString(item.fields.deskripsi),
+    description: truncateString(marked.parse(item.fields.deskripsi) as string),
     image: { src: imageURL, alt: item.fields.judul },
+    link: `/events/${item.fields.idHalaman}`,
   };
 });
 

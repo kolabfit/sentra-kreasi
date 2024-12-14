@@ -70,7 +70,7 @@ const metadata = {
   <HomeEvents columns={2}>
     <Fragment slot="more">
       <div class="mt-8 text-center">
-        <a href="/tags" class="text-blue-600 hover:text-blue-800 font-semibold"> Lihat Semua Event </a>
+        <a href="/event" class="text-blue-600 hover:text-blue-800 font-semibold"> Lihat Semua Event </a>
       </div>
     </Fragment>
   </HomeEvents>
@@ -97,23 +97,4 @@ const metadata = {
       image: 'mx-auto w-full rounded-lg bg-gray-500 shadow-lg',
     }}
   />
-
-  <!-- CallToAction Widget *********** -->
-
-  <CallToAction
-    actions={[
-      {
-        variant: 'primary',
-        text: 'Kunjungi',
-        href: 'https://www.instagram.com/sentrakreasi.ukm?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==',
-        target: '_blank',
-      },
-    ]}
-  >
-    <Fragment slot="title">
-      KOMUNITAS KAMPUNG DIGITAL&nbsp;<br class="block sm:hidden" /><span class="sm:whitespace-nowrap"
-        >SENTRA KREASI</span
-      >
-    </Fragment>
-  </CallToAction>
 </Layout>

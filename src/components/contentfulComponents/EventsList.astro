@@ -4,6 +4,7 @@ import { contentfulClient } from '~/lib/contentful';
 
 import { Icon } from 'astro-icon/components';
 import { getPermalink } from '~/utils/permalinks';
+import { marked } from 'marked';
 
 interface EventItemType {
   contentTypeId: string;
@@ -22,7 +23,7 @@ const entries = await contentfulClient.getEntries<EventItemType>({
   content_type: 'eventItemType',
 });
 
-function truncateString(str: string, length: number = 60): string {
+function truncateString(str: string, length: number = 200): string {
   if (!str || str.length <= length) {
     return str;
   }
@@ -36,10 +37,15 @@ const ContentItems = entries.items.map((item) => {
 
   const imageURL: string | null = typeof imageAsset?.fields?.file?.url === 'string' ? imageAsset.fields.file.url : null;
 
+  // Safeguard for marked.parse
+  const descriptionHTML = item.fields.deskripsi
+    ? marked.parse(item.fields.deskripsi)
+    : ''; // Fallback to empty string if deskripsi is undefined
+
   return {
     id: item.fields.idHalaman,
     title: item.fields.judul,
-    description: truncateString(item.fields.deskripsi),
+    description: truncateString(descriptionHTML as string),
     image: { src: imageURL, alt: item.fields.judul },
     publishDate: item.fields.tanggal,
     tags: Array.isArray(item.fields.tags) ? item.fields.tags : [],
@@ -88,7 +94,7 @@ const ContentItems = entries.items.map((item) => {
               </h2>
             </header>
 
-            {post.description && <p class="flex-grow text-muted dark:text-slate-400 text-lg">{post.description}</p>}
+            {post.description && <p class="flex-grow text-muted dark:text-slate-400 text-lg" set:html={post.description}></p>}
             <footer class="mt-5">
               <ul class="text-sm">
                 {post.tags.map((tag) => (

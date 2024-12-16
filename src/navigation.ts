@@ -50,7 +50,7 @@ export const headerData = {
     },
     {
       text: 'Repository',
-      href: getPermalink('/repository'),
+      href: 'https://tim-pkm-4.pages.dev/',
     },
   ],
 };
@@ -82,7 +82,7 @@ export const footerData = {
         },
         {
           text: 'Repository',
-          href: getPermalink('/repository'),
+          href: 'https://tim-pkm-4.pages.dev/',
         },
       ],
     },

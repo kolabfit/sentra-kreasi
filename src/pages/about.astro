@@ -5,6 +5,7 @@ import TeamList from '~/components/contentfulComponents/TeamList.astro';
 import Headline from '~/components/ui/Headline.astro';
 import WhatWeDoList from '~/components/contentfulComponents/WhatWeDoList.astro';
 import about from '~/assets/images/about.jpg';
+import kegiatan from '~/assets/images/kegiatan.png';
 
 //impor gambar
 // import logosentra from '../assets/images/logosentra.png';
@@ -38,6 +39,10 @@ const metadata = {
 
   <WhatWeDoList
     title="Apa yang Kami Lakukan"
+    image={{
+      src: kegiatan,
+      alt: 'Caos Image',
+    }}
   />
 
   <!-- Features2 Widget ************** -->

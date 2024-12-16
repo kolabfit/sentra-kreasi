@@ -6,6 +6,7 @@ import type { Asset, EntryFieldTypes } from 'contentful';
 import { contentfulClient } from '~/lib/contentful';
 import { Icon } from 'astro-icon/components';
 import Button from '~/components/ui/Button.astro';
+import Image from '../common/Image.astro';
 
 interface WhatWeDoType {
   contentTypeId: string;
@@ -35,6 +36,7 @@ const {
   tagline,
   callToAction = await Astro.slots.render('callToAction'),
   isReversed = false,
+  image,
 
   id,
   isDark = false,
@@ -56,6 +58,11 @@ const {
           subtitle: 'mb-8 text-xl text-muted dark:text-slate-400',
           // ...((classes?.headline as {}) ?? {}),
         }}
+      />
+      <Image
+        src={image?.src}
+        alt={image?.alt}
+        class={`w-full h-auto rounded-lg ${isReversed ? 'md:order-1' : ''}`}
       />
 
       <div class="w-full text-center md:text-left rtl:md:text-right">

@@ -30,7 +30,7 @@ export async function getStaticPaths() {
   });
 
   const totalPages = Math.ceil(entries.total / itemsPerPage);
-  const paths = [];
+  const paths = [{ params: { page: '1' } }];
   for (let i = 1; i <= totalPages; i++) {
     paths.push({ params: { page: String(i) } });
   }

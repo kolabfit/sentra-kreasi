@@ -163,7 +163,7 @@ const metadata = {
       >
         Previous
       </a>
-      <a id="nextbutton" href={getPermalink('/article/' + (currentPagination + 1))} class={buttonClass} aria-disabled={shouldDisableButton}> Next </a>
+      {shouldDisableButton ? <p class={buttonClass} aria-disabled={shouldDisableButton}> Next </p> : <a id="nextbutton" href={getPermalink('/article/' + (currentPagination + 1))} class={buttonClass} aria-disabled={shouldDisableButton}> Next </a>}
     </div>
   </section>
 </Layout>

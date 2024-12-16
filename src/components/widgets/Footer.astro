@@ -4,6 +4,7 @@ import { SITE } from 'astrowind:config';
 import { getHomePermalink } from '~/utils/permalinks';
 import { Image } from 'astro:assets';
 import logosentra from '../../assets/images/logosamping.png';
+import logosentramono from '../../assets/images/sentrakreasimono.png';
 
 interface Link {
   text?: string;
@@ -89,8 +90,10 @@ const {
           </div>
         ))
       }
-      <div class="text-right">
-        <Image src={logosentra} alt="Description of the image" class="mx-auto" width="200" />
+      <div class="col-span-6 md:col-span-3 lg:col-span-2">
+        <div class="text-right">
+          <Image src={logosentramono} alt="Description of the image" class="mx-auto w-full h-full"/>
+        </div>
       </div>
     </div>
 

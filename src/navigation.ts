@@ -37,11 +37,11 @@ export const headerData = {
       href: getPermalink('/about'),
     },
     {
-      text: 'Artikels',
+      text: 'Artikel',
       href: getPermalink('/article'),
     },
     {
-      text: 'Events',
+      text: 'Kegiatan',
       href: getPermalink('/event'),
     },
     {
@@ -69,11 +69,11 @@ export const footerData = {
           href: getPermalink('/about'),
         },
         {
-          text: 'Artikels',
+          text: 'Artikel',
           href: getPermalink('/article'),
         },
         {
-          text: 'Events',
+          text: 'Kegiatan',
           href: getPermalink('/event'),
         },
         {

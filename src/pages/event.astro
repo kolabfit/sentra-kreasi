@@ -19,6 +19,8 @@ interface EventItemType {
   };
 }
 
+export const prerender = false;
+
 const itemsPerPage = 4;
 const currentPagination = parseInt(Astro.url.searchParams.get('page') || '1');
 
@@ -66,13 +68,13 @@ if (currentPagination >= totalPages) {
 }
 
 const metadata = {
-  title: `Events - Page ${currentPagination}`,
+  title: `Kegiatan - Page ${currentPagination}`,
 };
 ---
 
 <Layout metadata={metadata}>
   <section class="px-6 sm:px-6 py-12 sm:py-16 lg:py-20 mx-auto max-w-4xl">
-    <Headline title="Events" subtitle="Cek event - event menarik dari kami" />
+    <Headline title="Kegiatan" subtitle="Cek event - event menarik dari kami" />
 
     <!-- Items -->
     <ul>

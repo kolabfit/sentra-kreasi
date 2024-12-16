@@ -19,6 +19,8 @@ interface ArtikelItemType {
   };
 }
 
+export const prerender = false;
+
 const itemsPerPage = 4;
 const currentPagination = parseInt(Astro.url.searchParams.get('page') || '1');
 
@@ -66,13 +68,13 @@ if (currentPagination >= totalPages) {
 }
 
 const metadata = {
-  title: `Artikels - Page ${currentPagination}`,
+  title: `Artikel - Page ${currentPagination}`,
 };
 ---
 
 <Layout metadata={metadata}>
   <section class="px-6 sm:px-6 py-12 sm:py-16 lg:py-20 mx-auto max-w-4xl">
-    <Headline title="Artikels" subtitle="Cek artikel - artikel menarik dari kami" />
+    <Headline title="Artikel" subtitle="Cek artikel - artikel menarik dari kami" />
 
     <!-- Items -->
     <ul>
@@ -80,7 +82,7 @@ const metadata = {
         ContentItems.map((post) => (
           <li class="mb-12 md:mb-20">
             <article class="max-w-md mx-auto md:max-w-none grid gap-6 md:gap-8 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade md:grid-cols-2">
-              <a class="relative block group" href={getPermalink(`/artikel/${post.id}`)}>
+              <a class="relative block group" href={getPermalink(`/articles/${post.id}`)}>
                 <div class="relative h-0 pb-[56.25%] md:pb-[75%] md:h-72 lg:pb-[56.25%] overflow-hidden bg-gray-400 dark:bg-slate-700 rounded shadow-lg">
                   <img
                     src={post.image.src}
@@ -105,7 +107,7 @@ const metadata = {
                     {post.id ? (
                       <a
                         class="inline-block hover:text-primary dark:hover:text-blue-700 transition ease-in duration-200"
-                        href={getPermalink('/artikel/' + post.id)}
+                        href={getPermalink('/articles/' + post.id)}
                       >
                         {post.title}
                       </a>

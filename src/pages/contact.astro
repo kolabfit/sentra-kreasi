@@ -1,10 +1,8 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
-import HeroText from '~/components/widgets/HeroText.astro';
-import ContactUs from '~/components/widgets/Contact.astro';
-import Features2 from '~/components/widgets/Features2.astro';
-import ContactList from '~/components/contentfulComponents/ContactList.astro';
 import Headline from '~/components/ui/Headline.astro';
+import ContactList from '~/components/contentfulComponents/ContactList.astro';
+import Button from '~/components/ui/Button.astro';
 
 const metadata = {
   title: 'Kontak',
@@ -15,27 +13,88 @@ const metadata = {
   <section class="px-6 sm:px-6 py-12 sm:py-16 lg:py-20 mx-auto max-w-4xl">
     <Headline title="Kontak Kami" subtitle="Hubungi kami untuk informasi lebih lanjut" />
 
-    <ContactUs
-      id="form"
-      inputs={[
-        {
-          type: 'text',
-          name: 'name',
-          label: 'Name',
-        },
-        {
-          type: 'email',
-          name: 'email',
-          label: 'Email',
-        },
-      ]}
-      textarea={{
-        label: 'Message',
-      }}
-    />
+    <div class="relative not-prose scroll-mt-[72px]">
+      <div class="absolute inset-0 pointer-events-none -z-[1]" aria-hidden="true">
+        <slot name="bg" />
+      </div>
+      <div
+        class="relative px-4 md:px-6 py-6 md:py-8 lg:py-10 text-default intersect-once intersect-quarter intercept-no-queue motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade max-w-7xl mx-auto"
+      >
+        <div
+          class="flex flex-col max-w-xl mx-auto rounded-lg backdrop-blur border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900 shadow p-4 sm:p-6 lg:p-8 w-full"
+        >
+          <form onsubmit="submitForm(event)">
+            <div class="mb-6">
+              <label for="name" class="block text-sm font-medium">
+                Nama
+              </label>
+              <input
+                type="text"
+                name="name"
+                id="name"
+                class="py-3 px-4 block w-full text-md rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900"
+              />
+            </div>
+            <div class="mb-6">
+              <label for="company" class="block text-sm font-medium">
+                Perusahaan / Institusi
+              </label>
+              <input
+                type="text"
+                name="company"
+                id="company"
+                class="py-3 px-4 block w-full text-md rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900"
+              />
+            </div>
+            <div>
+              <label for="message" class="block text-sm font-medium">
+                Pesan
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                rows="4"
+                class="py-3 px-4 block w-full text-md rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900"
+              ></textarea>
+            </div>
+            <div class="mt-10 grid">
+              <Button variant="primary" type="submit">
+                Hubungi Kami
+              </Button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- Contacts -->
-
   <ContactList id="contact-list" isDark={false} />
+
+  <script data-astro-run data-astro-rerun>
+    function submitForm(event) {
+      event.preventDefault();
+      const form = event.target;
+
+      const name = form.elements['name'].value.trim();
+      const company = form.elements['company'].value.trim();
+      const message = form.elements['message'].value.trim();
+
+      const phoneNumber = '089611284382';
+      const baseUrl = `https://wa.me/${phoneNumber}?text=`;
+
+      // Construct the message with line breaks
+      const textMessage = `Perkenalan, nama saya ${name}\ndari instansi: ${company}\n, \n${message}`;
+
+      // Encode the message
+      const encodedMessage = encodeURIComponent(textMessage);
+
+      // Construct the final URL
+      const finalUrl = baseUrl + encodedMessage;
+      console.log('Redirecting to:', finalUrl);
+
+      // Redirect the user to WhatsApp
+      window.location.href = finalUrl;
+    }
+  </script>
 </Layout>

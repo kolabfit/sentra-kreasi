@@ -47,36 +47,42 @@ const {
   title = await Astro.slots.render('title'),
   subtitle = await Astro.slots.render('subtitle'),
   tagline = await Astro.slots.render('tagline'),
+  // columns is no longer used for slicing, but you can still pass it if needed
   columns = 3,
   id,
   isDark = false,
   classes = {},
   bg = await Astro.slots.render('bg'),
 } = Astro.props;
+
+// Create the row arrays: first row 2 items, then groups of 3 for subsequent rows
+const firstRow = ContentItems.slice(0, 2);
+const remaining = ContentItems.slice(2);
+const rowArrays = [firstRow];
+
+for (let i = 0; i < remaining.length; i += 3) {
+  rowArrays.push(remaining.slice(i, i + 3));
+}
 ---
 
 <WidgetWrapper id={id} isDark={isDark} containerClass={`max-w-7xl mx-auto ${classes?.container ?? ''}`} bg={bg}>
-  {
-    Array.from({ length: Math.ceil(ContentItems.length / columns) }).map((_, rowIndex) => (
-      <div class="py-2 flex flex-col justify-center items-center w-full">
-        <ItemGrid2
-          key={`row-${rowIndex}`}
-          items={ContentItems.slice(rowIndex * columns, (rowIndex + 1) * columns)}
-          columns={Math.min(columns, ContentItems.length - rowIndex * columns)}
-          classes={{
-            container: 'gap-4 md:gap-6 flex justify-center items-center',
-            panel:
-              'rounded-lg shadow-[0_4px_30px_rgba(0,0,0,0.1)] dark:shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur border border-[#ffffff29] bg-white dark:bg-slate-900 p-6 text-center flex flex-col items-center justify-center w-full h-full',
-            title: 'text-center',
-            description: 'text-center',
-            ...((classes?.items as {}) ?? {}),
-          }}
-        />
-      </div>
-    ))
-  }
+  {rowArrays.map((items, rowIndex) => (
+    <div class="py-2 flex flex-col justify-center items-center w-full">
+      <ItemGrid2
+        items={items}
+        columns={items.length} /* This will be 2 for first row and 3 for others */
+        classes={{
+          container: 'gap-4 md:gap-6 flex justify-center items-center',
+          panel:
+            'rounded-lg shadow-[0_4px_30px_rgba(0,0,0,0.1)] dark:shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur border border-[#ffffff29] bg-white dark:bg-slate-900 p-6 text-center flex flex-col items-center justify-center w-full h-full',
+          title: 'text-center',
+          description: 'text-center',
+          ...((classes?.items as {}) ?? {}),
+        }}
+      />
+    </div>
+  ))}
 
-  {/* Tambahkan slot "more" di sini */}
   <div class="mt-8">
     <slot name="more" />
   </div>

@@ -26,7 +26,7 @@ const whenExternalScripts = (items: (() => AstroIntegration) | (() => AstroInteg
 
 export default defineConfig({
   
-  output: 'server',
+  output: 'hybrid',
 
   integrations: [
 

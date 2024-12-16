@@ -7,8 +7,6 @@ import { contentfulClient } from '~/lib/contentful';
 
 import { Icon } from 'astro-icon/components';
 import { getPermalink } from '~/utils/permalinks';
-// import { Icon } from 'astro-icon/components';
-// import type { Features } from '~/types';
 
 interface TeamListType {
   contentTypeId: string;
@@ -49,8 +47,7 @@ const {
   title = await Astro.slots.render('title'),
   subtitle = await Astro.slots.render('subtitle'),
   tagline = await Astro.slots.render('tagline'),
-  columns = 2,
-
+  columns = 3,
   id,
   isDark = false,
   classes = {},
@@ -59,20 +56,25 @@ const {
 ---
 
 <WidgetWrapper id={id} isDark={isDark} containerClass={`max-w-7xl mx-auto ${classes?.container ?? ''}`} bg={bg}>
-  <div class="flex justify-center items-center w-full">
-    <ItemGrid2
-      items={ContentItems}
-      columns={columns}
-      classes={{
-        container: 'gap-4 md:gap-6 flex justify-center items-center',
-        panel:
-          'rounded-lg shadow-[0_4px_30px_rgba(0,0,0,0.1)] dark:shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur border border-[#ffffff29] bg-white dark:bg-slate-900 p-6 text-center flex flex-col items-center justify-center w-full h-full',
-        title: 'text-center',
-        description: 'text-center',
-        ...((classes?.items as {}) ?? {}),
-      }}
-    />
-  </div>
+  {
+    Array.from({ length: Math.ceil(ContentItems.length / columns) }).map((_, rowIndex) => (
+      <div class="py-2 flex flex-col justify-center items-center w-full">
+        <ItemGrid2
+          key={`row-${rowIndex}`}
+          items={ContentItems.slice(rowIndex * columns, (rowIndex + 1) * columns)}
+          columns={Math.min(columns, ContentItems.length - rowIndex * columns)}
+          classes={{
+            container: 'gap-4 md:gap-6 flex justify-center items-center',
+            panel:
+              'rounded-lg shadow-[0_4px_30px_rgba(0,0,0,0.1)] dark:shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur border border-[#ffffff29] bg-white dark:bg-slate-900 p-6 text-center flex flex-col items-center justify-center w-full h-full',
+            title: 'text-center',
+            description: 'text-center',
+            ...((classes?.items as {}) ?? {}),
+          }}
+        />
+      </div>
+    ))
+  }
 
   {/* Tambahkan slot "more" di sini */}
   <div class="mt-8">

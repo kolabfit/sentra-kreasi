@@ -19,6 +19,8 @@ interface ArtikelItemType {
   };
 }
 
+export const prerender = false;
+
 const itemsPerPage = 4;
 const currentPagination = parseInt(Astro.url.searchParams.get('page') || '1');
 

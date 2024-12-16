@@ -1,24 +1,12 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
 import Hero from '~/components/widgets/Hero.astro';
-// import Note from '~/components/widgets/Note.astro';
-// import Features from '~/components/widgets/Features.astro';
-import Features2 from '~/components/widgets/Features2.astro';
-// import Steps from '~/components/widgets/Steps.astro';
-import Content from '~/components/widgets/Content.astro';
-// import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
-// import FAQs from '~/components/widgets/FAQs.astro';
-// import Stats from '~/components/widgets/Stats.astro ';
-import CallToAction from '~/components/widgets/CallToAction.astro';
 import HomeEvents from '~/components/contentfulComponents/HomeEvents.astro';
-import sorban from '~/assets/images/sorban.png';
-import peci from '~/assets/images/peci.png';
-import kaos from '~/assets/images/peci.png';
-import dompet from '~/assets/images/dompet.png';
 import Maps from '~/components/widgets/Maps.astro';
 import Headline from '~/components/ui/Headline.astro';
 import ProductContents from '~/components/contentfulComponents/ProductContents.astro';
 import ContactList from '~/components/contentfulComponents/ContactList.astro';
+import { getPermalink } from '~/utils/permalinks';
 // import { string } from 'astro:schema';
 
 const metadata = {
@@ -70,7 +58,7 @@ const metadata = {
   <HomeEvents columns={2}>
     <Fragment slot="more">
       <div class="mt-8 text-center">
-        <a href="/event" class="text-blue-600 hover:text-blue-800 font-semibold"> Lihat Semua Event </a>
+        <a href={getPermalink('/events')} class="text-blue-600 hover:text-blue-800 font-semibold"> Lihat Semua Event </a>
       </div>
     </Fragment>
   </HomeEvents>

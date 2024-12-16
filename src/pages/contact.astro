@@ -13,11 +13,8 @@ const metadata = {
 
 <Layout metadata={metadata}>
   <section class="px-6 sm:px-6 py-12 sm:py-16 lg:py-20 mx-auto max-w-4xl">
-    <Headline
-      title="Kontak Kami"
-      subtitle="Hubungi kami untuk informasi lebih lanjut"
-    />
-  
+    <Headline title="Kontak Kami" subtitle="Hubungi kami untuk informasi lebih lanjut" />
+
     <ContactUs
       id="form"
       inputs={[
@@ -36,12 +33,9 @@ const metadata = {
         label: 'Message',
       }}
     />
-  
-    <!-- Contacts -->
-  
-    <ContactList
-      id="contact-list"
-      isDark={false}
-    />
   </section>
+
+  <!-- Contacts -->
+
+  <ContactList id="contact-list" isDark={false} />
 </Layout>

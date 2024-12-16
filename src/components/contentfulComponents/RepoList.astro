@@ -6,7 +6,6 @@ import type { Asset, EntryFieldTypes } from 'contentful';
 import { contentfulClient } from '~/lib/contentful';
 import { marked } from 'marked';
 
-
 const {
   columns = 2,
 
@@ -45,10 +44,11 @@ const ContentItems = entries.items.map((item) => {
   );
 
   const imageURL: string | null = typeof imageAsset?.fields?.file?.url === 'string' ? imageAsset.fields.file.url : null;
+  const descriptionHTML = item.fields.deskripsi ? marked.parse(item.fields.deskripsi) : '';
 
   return {
     title: item.fields.judul,
-    description: truncateString(marked.parse(item.fields.deskripsi) as string),
+    description: truncateString(descriptionHTML as string),
     image: { src: imageURL, alt: item.fields.judul },
     link: item.fields.linkRepository,
   };

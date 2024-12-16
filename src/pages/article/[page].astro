@@ -99,7 +99,7 @@ const metadata = {
         ContentItems.map((post) => (
           <li class="mb-12 md:mb-20">
             <article class="max-w-md mx-auto md:max-w-none grid gap-6 md:gap-8 intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade md:grid-cols-2">
-              <a class="relative block group" href={getPermalink(`/article/${post.id}`)}>
+              <a class="relative block group" href={getPermalink(`/articles/${post.id}`)}>
                 <div class="relative h-0 pb-[56.25%] md:pb-[75%] md:h-72 lg:pb-[56.25%] overflow-hidden bg-gray-400 dark:bg-slate-700 rounded shadow-lg">
                   <img
                     src={post.image.src}
@@ -124,7 +124,7 @@ const metadata = {
                     {post.id ? (
                       <a
                         class="inline-block hover:text-primary dark:hover:text-blue-700 transition ease-in duration-200"
-                        href={getPermalink('/article/' + post.id)}
+                        href={getPermalink('/articles/' + post.id)}
                       >
                         {post.title}
                       </a>
@@ -155,36 +155,15 @@ const metadata = {
     </ul>
 
     <div class="flex justify-center text-center gap-4 sm:gap-6">
-      <button
-        onclick="previousPage()"
+      <a
+        {...currentPagination > 1 && { 'href' : getPermalink('/article/' + (currentPagination - 1)) }}
         class={currentPagination == 1
           ? 'text-muted px-4 py-2 bg-gray-400 dark:bg-slate-800 rounded'
           : 'px-4 py-2 bg-gray-200 dark:bg-slate-800 rounded'}
       >
         Previous
-      </button>
-      <button id="nextbutton" onclick="nextPage()" class={buttonClass} disabled={shouldDisableButton}> Next </button>
+      </a>
+      <a id="nextbutton" href={getPermalink('/article/' + (currentPagination + 1))} class={buttonClass} aria-disabled={shouldDisableButton}> Next </a>
     </div>
   </section>
 </Layout>
-
-<script data-astro-rerun data-astro-run>
-  function nextPage() {
-    const path = window.location.pathname; // Gets "/event/2"
-    const parts = path.split('/'); // Splits the path into ['','event','2']
-    const currentPage = parts[parts.length - 1]; // Gets the last part, which is "2"
-
-    if (currentPage > 0) {
-      window.location.assign(window.location.origin + '/article/' + (parseInt(currentPage, 10) + 1));
-    }
-  }
-
-  function previousPage() {
-    const path = window.location.pathname; // Gets "/event/2"
-    const parts = path.split('/'); // Splits the path into ['','event','2']
-    const currentPage = parts[parts.length - 1]; // Gets the last part, which is "2"
-    if (currentPage > 1) {
-      window.location.assign(window.location.origin + '/article/' + (parseInt(currentPage, 10) - 1));
-    }
-  }
-</script>

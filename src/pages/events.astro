@@ -150,21 +150,3 @@ const metadata = {
     </div>
   </section>
 </Layout>
-
-<script data-astro-rerun data-astro-run>
-  function nextPage() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const currentPage = parseInt(urlParams.get('page') || '1', 10);
-    if (currentPage > 0) {
-      window.location.assign(window.location.origin + window.location.pathname + '?page=' + (currentPage + 1));
-    }
-  }
-
-  function previousPage() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const currentPage = parseInt(urlParams.get('page') || '1', 10);
-    if (currentPage > 1) {
-      window.location.assign(window.location.origin + window.location.pathname + '?page=' + (currentPage - 1));
-    }
-  }
-</script>

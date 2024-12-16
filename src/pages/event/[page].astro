@@ -155,37 +155,15 @@ const metadata = {
     </ul>
 
     <div class="flex justify-center text-center gap-4 sm:gap-6">
-      <button
-        onclick="previousPage()"
+      <a
+        {...currentPagination > 1 && { 'href' : getPermalink('/event/' + (currentPagination - 1)) }}
         class={currentPagination == 1
           ? 'text-muted px-4 py-2 bg-gray-400 dark:bg-slate-800 rounded'
           : 'px-4 py-2 bg-gray-200 dark:bg-slate-800 rounded'}
       >
         Previous
-      </button>
-      <button id="nextbutton" onclick="nextPage()" class={buttonClass} disabled={shouldDisableButton}> Next </button>
+      </a>
+      <a id="nextbutton" href={getPermalink('/event/' + (currentPagination + 1))} class={buttonClass} aria-disabled={shouldDisableButton}> Next </a>
     </div>
   </section>
 </Layout>
-
-<script data-astro-rerun data-astro-run>
-  function nextPage() {
-    // Example URL: http://localhost:4321/event/2
-    const path = window.location.pathname; // Gets "/event/2"
-    const parts = path.split('/'); // Splits the path into ['','event','2']
-    const currentPage = parts[parts.length - 1]; // Gets the last part, which is "2"
-
-    if (currentPage > 0) {
-      window.location.assign(window.location.origin + '/event/' + (parseInt(currentPage, 10) + 1));
-    }
-  }
-
-  function previousPage() {
-    const path = window.location.pathname; // Gets "/event/2"
-    const parts = path.split('/'); // Splits the path into ['','event','2']
-    const currentPage = parts[parts.length - 1]; // Gets the last part, which is "2"
-    if (currentPage > 1) {
-      window.location.assign(window.location.origin + '/event/' + (parseInt(currentPage, 10) - 1));
-    }
-  }
-</script>

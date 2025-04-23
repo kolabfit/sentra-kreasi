@@ -6,6 +6,7 @@ import { Icon } from 'astro-icon/components';
 import { getPermalink } from '~/utils/permalinks';
 import { marked } from 'marked';
 import type { Asset, EntryFieldTypes } from 'contentful';
+import ChatbotWidget from '~/components/common/ChatbotWidget.astro';
 
 interface EventItemType {
   contentTypeId: string;
@@ -149,4 +150,7 @@ const metadata = {
       <button id="nextbutton" onclick="nextPage()" class={buttonClass} disabled={shouldDisableButton}> Next </button>
     </div>
   </section>
+
+  <!-- Chatbot Widget -->
+  <ChatbotWidget />
 </Layout>

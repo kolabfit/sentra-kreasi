@@ -6,6 +6,7 @@ import { Icon } from 'astro-icon/components';
 import { getPermalink } from '~/utils/permalinks';
 import { marked } from 'marked';
 import type { Asset, EntryFieldTypes } from 'contentful';
+import ChatbotWidget from '~/components/common/ChatbotWidget.astro';
 
 interface ArticleItemType {
   contentTypeId: string;
@@ -166,4 +167,7 @@ const metadata = {
       {shouldDisableButton ? <p class={buttonClass} aria-disabled={shouldDisableButton}> Next </p> : <a id="nextbutton" href={getPermalink('/article/' + (currentPagination + 1))} class={buttonClass} aria-disabled={shouldDisableButton}> Next </a>}
     </div>
   </section>
+  
+  <!-- Chatbot Widget -->
+  <ChatbotWidget />
 </Layout>

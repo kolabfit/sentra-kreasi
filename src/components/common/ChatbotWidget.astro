@@ -1,0 +1,133 @@
+---
+
+---
+
+<script>
+  import { marked } from 'marked';
+
+  const url = 'https://sasana-be-chat-ts.sasana.ai/v3/chat';
+  const headers = {
+    'Content-Type': 'application/json',
+    'X-API-KEY': 'sbTezFX0DNAiwOTQHNQXrGRtWRFikLUoy2n2ctKi5M',
+  };
+
+  const chatMessages = document.getElementById('chat-messages');
+  const messageInput = document.getElementById('message-input');
+  const sendButton = document.getElementById('send-button');
+
+  function appendMessage(text, sender) {
+    const msgDiv = document.createElement('div');
+    msgDiv.classList.add('fade-in', 'mb-1', 'p-2', 'rounded', 'max-w-full', 'break-words');
+
+    if (sender === 'user') {
+      msgDiv.classList.add('bg-green-100', 'text-right', 'ml-auto');
+      msgDiv.textContent = 'You: ' + text;
+    } else {
+      msgDiv.classList.add('bg-green-100', 'text-left', 'mr-auto');
+      msgDiv.innerHTML = 'Bot: ' + marked.parse(text);
+    }
+
+    if (chatMessages) {
+      chatMessages.appendChild(msgDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+  }
+
+  function sendMessage() {
+    const message = (messageInput as HTMLInputElement)?.value.trim();
+    if (!message) return;
+
+    appendMessage(message, 'user');
+    (messageInput as HTMLInputElement).value = '';
+
+    const data = {
+      message,
+      userId: crypto.randomUUID(),
+      sessionId: crypto.randomUUID(),
+      agentId: 'd3216ab6-e5e5-4039-a0c2-07c736dd7252',
+    };
+
+    fetch(url, {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify(data),
+    })
+      .then(async (response) => {
+        const json = await response.json();
+
+        if (!response.ok) {
+          // Handle known errors
+          if (json && json.message) {
+            appendMessage(`❗ Error: ${json.message}`, 'bot');
+          } else {
+            appendMessage('❗ Something went wrong. Please try again.', 'bot');
+          }
+          throw new Error(json.message || 'Unknown error');
+        }
+
+        const reply = json?.data?.content || 'No response received.';
+        appendMessage(reply, 'bot');
+      })
+      .catch((error) => {
+        console.error(error);
+        appendMessage('🚫 Failed to connect. Please check your internet or try again later.', 'bot');
+      });
+  }
+
+  if (sendButton && messageInput) {
+    sendButton.addEventListener('click', sendMessage);
+    messageInput.addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') {
+        sendMessage();
+      }
+    });
+  }
+</script>
+
+<div x-data="{ open: false }" x-cloak class="fixed bottom-6 right-6 z-50">
+  <!-- Floating Chat Button -->
+  <button
+    @click="open = true"
+    class="w-14 h-14 bg-green-600 text-white rounded-full shadow-lg hover:bg-green-700 focus:outline-none"
+  >
+    💬
+  </button>
+
+  <!-- Modal Overlay -->
+  <div
+    x-show="open"
+    x-transition
+    class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center"
+    @click.self="open = false"
+  >
+    <!-- Chat Container -->
+    <div class="bg-white max-w-md w-full rounded-lg shadow-lg p-4 relative" @click.stop>
+      <!-- Close Button -->
+      <button @click="open = false" class="absolute top-2 right-2 text-gray-500 hover:text-gray-800 font-bold text-xl"
+        >&times;</button
+      >
+
+      <h1 class="text-2xl font-bold mb-2 text-center">FAQ | Chatbot</h1>
+      <h3 class="mb-4 text-center text-gray-500 text-sm">Ask our AI Agent for more information surronding Sentra Kreasi.</h3>
+
+      <div id="chat-messages" class="h-72 overflow-y-auto border border-gray-200 p-2 mb-2 rounded text-sm"></div>
+
+      <div class="flex mb-2">
+        <input id="message-input" type="text" placeholder="Type your question..." class="flex-1 p-2 border rounded-l" />
+        <button id="send-button" class="px-3 bg-green-500 text-white rounded-r hover:bg-green-600">Send</button>
+      </div>
+
+      <a
+        href="https://studio.sasana.ai/chat/52315fd3-2970-462f-914b-adef23295028"
+        target="_blank"
+        class="block text-center text-xs text-green-400 hover:underline">Try backup link if not working</a
+      >
+    </div>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script type="module" src="/scripts/chatbot.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>

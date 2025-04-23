@@ -6,6 +6,7 @@ import Headline from '~/components/ui/Headline.astro';
 import WhatWeDoList from '~/components/contentfulComponents/WhatWeDoList.astro';
 import about from '~/assets/images/about.jpg';
 import kegiatan from '~/assets/images/kegiatan.png';
+import ChatbotWidget from '~/components/common/ChatbotWidget.astro';
 
 //impor gambar
 // import logosentra from '../assets/images/logosentra.png';
@@ -51,5 +52,8 @@ const metadata = {
   <TeamList
     columns={3}
   />
+  
+  <!-- Chatbot Widget -->
+  <ChatbotWidget />
   </Layout
 >

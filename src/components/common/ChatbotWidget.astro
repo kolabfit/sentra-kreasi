@@ -106,6 +106,15 @@
       });
     }, 100); // small delay to let Alpine render
   });
+  
+  // Tambahkan ini sebelum window.sendMessage = sendMessage;
+  declare global {
+    interface Window {
+      sendMessage: () => void;
+    }
+  }
+
+  window.sendMessage = sendMessage; // 👈 Tambahkan ini agar fungsi bisa diakses global
 </script>
 
 <div x-data="{ open: false }" x-cloak class="fixed bottom-6 right-6 z-50 flex items-center space-x-2">

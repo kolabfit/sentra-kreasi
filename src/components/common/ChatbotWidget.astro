@@ -59,8 +59,8 @@
         <button
           id="send-button"
           class="px-3 bg-green-500 text-white rounded-r hover:bg-green-600 dark:bg-green-700 dark:hover:bg-green-600"
-          @click="sendMessage()"
-          @keydown.enter="sendMessage()"
+          @click="$store.chat.sendMessage()"
+          @keydown.enter="$store.chat.sendMessage()"
         >
           Kirim
         </button>
@@ -83,11 +83,55 @@
 <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
-  const url = 'https://sasana-be-chat-ts.sasana.ai/v3/chat';
-  const headers = {
-    'Content-Type': 'application/json',
-    'X-API-KEY': 'g4gsKk7ftGZUzIg4NXBQLxTggaFpRmdqSEgdvPy0',
-  };
+  document.addEventListener('alpine:init', () => {
+    Alpine.store('chat', {
+      sendMessage() {
+        const messageInput = document.getElementById('message-input');
+        const message = messageInput?.value.trim();
+        if (!message) return;
+
+        appendMessage(message, 'user');
+        messageInput.value = '';
+
+        const data = {
+          message,
+          userId: crypto.randomUUID(),
+          sessionId: crypto.randomUUID(),
+          agentId: 'd3216ab6-e5e5-4039-a0c2-07c736dd7252',
+        };
+
+        fetch('https://sasana-be-chat-ts.sasana.ai/v3/chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-API-KEY': 'g4gsKk7ftGZUzIg4NXBQLxTggaFpRmdqSEgdvPy0',
+          },
+          body: JSON.stringify(data),
+        })
+          .then(async (response) => {
+            const json = await response.json();
+
+            if (!response.ok) {
+              if (json && json.message) {
+                appendMessage(`❗ Error: ${json.message}`, 'bot');
+                appendMessage(`❗ Error Code: ${json.error}`, 'bot');
+                appendMessage(`❗ Error Status: ${json.statusCode}`, 'bot');
+              } else {
+                appendMessage('❗ Something went wrong. Please try again.', 'bot');
+              }
+              throw new Error(json.message || 'Unknown error');
+            }
+
+            const reply = json?.data?.content || 'No response received.';
+            appendMessage(reply, 'bot');
+          })
+          .catch((error) => {
+            console.error(error);
+            appendMessage('🚫 Failed to connect. Please check your internet or try again later.', 'bot');
+          });
+      }
+    });
+  });
 
   function appendMessage(text, sender) {
     const chatMessages = document.getElementById('chat-messages');
@@ -107,47 +151,5 @@
       chatMessages.scrollTop = chatMessages.scrollHeight;
     }
   }
-
-  window.sendMessage = function () {
-    const messageInput = document.getElementById('message-input');
-    const message = messageInput?.value.trim();
-    if (!message) return;
-
-    appendMessage(message, 'user');
-    messageInput.value = '';
-
-    const data = {
-      message,
-      userId: crypto.randomUUID(),
-      sessionId: crypto.randomUUID(),
-      agentId: 'd3216ab6-e5e5-4039-a0c2-07c736dd7252',
-    };
-
-    fetch(url, {
-      method: 'POST',
-      headers: headers,
-      body: JSON.stringify(data),
-    })
-      .then(async (response) => {
-        const json = await response.json();
-
-        if (!response.ok) {
-          if (json && json.message) {
-            appendMessage(`❗ Error: ${json.message}`, 'bot');
-            appendMessage(`❗ Error Code: ${json.error}`, 'bot');
-            appendMessage(`❗ Error Status: ${json.statusCode}`, 'bot');
-          } else {
-            appendMessage('❗ Something went wrong. Please try again.', 'bot');
-          }
-          throw new Error(json.message || 'Unknown error');
-        }
-
-        const reply = json?.data?.content || 'No response received.';
-        appendMessage(reply, 'bot');
-      })
-      .catch((error) => {
-        console.error(error);
-        appendMessage('🚫 Failed to connect. Please check your internet or try again later.', 'bot');
-      });
-  };
 </script>
+

@@ -16,6 +16,7 @@ import BasicScripts from '~/components/common/BasicScripts.astro';
 import { ViewTransitions } from 'astro:transitions';
 
 import type { MetaData as MetaDataType } from '~/types';
+import ChatbotWidget from '~/components/common/ChatbotWidget.astro';
 
 export interface Props {
   metadata?: MetaDataType;
@@ -39,6 +40,7 @@ const { language, textDirection } = I18N;
     <!-- Font -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <script src="/chatbot.js" type="module"></script>
 
     <!-- Comment the line below to disable View Transitions -->
     <ViewTransitions fallback="swap" />
@@ -65,5 +67,8 @@ const { language, textDirection } = I18N;
     <slot />
 
     <BasicScripts />
+    
+    <!-- Chatbot Widget -->
+    <ChatbotWidget />
   </body>
 </html>

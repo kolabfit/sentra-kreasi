@@ -6,7 +6,6 @@ import Headline from '~/components/ui/Headline.astro';
 import WhatWeDoList from '~/components/contentfulComponents/WhatWeDoList.astro';
 import about from '~/assets/images/about.jpg';
 import kegiatan from '~/assets/images/kegiatan.png';
-import ChatbotWidget from '~/components/common/ChatbotWidget.astro';
 
 //impor gambar
 // import logosentra from '../assets/images/logosentra.png';
@@ -25,14 +24,12 @@ const metadata = {
       alt: 'Caos Image',
     }}
   >
-    <Fragment slot="title">
-      Tentang Kami
-    </Fragment>
+    <Fragment slot="title"> Tentang Kami </Fragment>
 
     <Fragment slot="subtitle">
-      UMKM Sentra Kreasi Bandung didirikan pada tahun 2018 sebagai wadah untuk memperkuat dan mempromosikan
-      karya dan kreasi UMKM di Kabupaten Bandung. Kami berkomitmen untuk membantu para pengusaha lokal mengembangkan
-      bisnis mereka dan memperkenalkan produk-produk unik Kabupaten Bandung ke pasar yang lebih luas.
+      UMKM Sentra Kreasi Bandung didirikan pada tahun 2018 sebagai wadah untuk memperkuat dan mempromosikan karya dan
+      kreasi UMKM di Kabupaten Bandung. Kami berkomitmen untuk membantu para pengusaha lokal mengembangkan bisnis mereka
+      dan memperkenalkan produk-produk unik Kabupaten Bandung ke pasar yang lebih luas.
     </Fragment>
   </Hero>
 
@@ -48,12 +45,6 @@ const metadata = {
 
   <!-- Features2 Widget ************** -->
 
-  <Headline title='Tim Kami' subtitle='' tagline=''' />
-  <TeamList
-    columns={3}
-  />
-  
-  <!-- Chatbot Widget -->
-  <ChatbotWidget />
-  </Layout
->
+  <Headline title="Tim Kami" subtitle="" tagline="" ' />
+  <TeamList columns={3} />
+</Layout>

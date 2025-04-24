@@ -2,121 +2,6 @@
 
 ---
 
-<script>
-  import { marked } from 'marked';
-
-  const url = 'https://sasana-be-chat-ts.sasana.ai/v3/chat';
-  const headers = {
-    'Content-Type': 'application/json',
-    'X-API-KEY': 'g4gsKk7ftGZUzIg4NXBQLxTggaFpRmdqSEgdvPy0',
-  };
-
-  function appendMessage(text, sender) {
-    const chatMessages = document.getElementById('chat-messages');
-    const msgDiv = document.createElement('div');
-    msgDiv.classList.add('fade-in', 'mb-1', 'p-2', 'rounded', 'max-w-full', 'break-words');
-
-    if (sender === 'user') {
-      msgDiv.classList.add('bg-green-100', 'text-right', 'ml-auto', 'dark:bg-green-800', 'dark:text-white');
-      msgDiv.textContent = 'You: ' + text;
-    } else {
-      msgDiv.classList.add('bg-green-100', 'text-left', 'mr-auto', 'dark:bg-gray-700', 'dark:text-white');
-      msgDiv.innerHTML = 'Chatbot: ' + marked.parse(text);
-    }
-
-    if (chatMessages) {
-      chatMessages.appendChild(msgDiv);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-  }
-
-  function sendMessage() {
-    const messageInput = document.getElementById('message-input');
-    const message = (messageInput as HTMLInputElement)?.value.trim();
-    if (!message) return;
-
-    appendMessage(message, 'user');
-    (messageInput as HTMLInputElement).value = '';
-
-    const data = {
-      message,
-      userId: crypto.randomUUID(),
-      sessionId: crypto.randomUUID(),
-      agentId: 'd3216ab6-e5e5-4039-a0c2-07c736dd7252',
-    };
-
-    fetch(url, {
-      method: 'POST',
-      headers: headers,
-      body: JSON.stringify(data),
-    })
-      .then(async (response) => {
-        const json = await response.json();
-
-        if (!response.ok) {
-          if (json && json.message) {
-            appendMessage(`❗ Error: ${json.message}`, 'bot');
-            appendMessage(`❗ Error Code: ${json.error}`, 'bot');
-            appendMessage(`❗ Error Status: ${json.statusCode}`, 'bot');
-          } else {
-            appendMessage('❗ Something went wrong. Please try again.', 'bot');
-          }
-          throw new Error(json.message || 'Unknown error');
-        }
-
-        const reply = json?.data?.content || 'No response received.';
-        appendMessage(reply, 'bot');
-      })
-      .catch((error) => {
-        console.error(error);
-        appendMessage('🚫 Failed to connect. Please check your internet or try again later.', 'bot');
-      });
-  }
-
-  // Attach listeners after DOM is ready
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      function attachListeners() {
-        const sendButton = document.getElementById('send-button');
-        const messageInput = document.getElementById('message-input');
-
-        if (sendButton && messageInput) {
-          sendButton.onclick = sendMessage;
-          messageInput.onkeypress = function (e) {
-            if (e.key === 'Enter') {
-              sendMessage();
-            }
-          };
-
-          // Auto-scroll saat input fokus (untuk mobile keyboard)
-          messageInput.addEventListener('focus', () => {
-            setTimeout(() => {
-              messageInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }, 300);
-          });
-        }
-      }
-
-      // Initial attach
-      attachListeners();
-
-      // Re-attach setelah Alpine buka modal (karena elemen di render ulang)
-      const observer = new MutationObserver(() => {
-        attachListeners();
-      });
-    }, 100); // small delay to let Alpine render
-  });
-  
-  // Tambahkan ini sebelum window.sendMessage = sendMessage;
-  declare global {
-    interface Window {
-      sendMessage: () => void;
-    }
-  }
-
-  window.sendMessage = sendMessage; // 👈 Tambahkan ini agar fungsi bisa diakses global
-</script>
-
 <div x-data="{ open: false }" x-cloak class="fixed bottom-6 right-6 z-50 flex items-center space-x-2">
   <!-- Floating Text Label -->
   <div
@@ -196,3 +81,82 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+  import { marked } from 'marked';
+
+  // Extend the Window interface to include sendMessage
+  declare global {
+    interface Window {
+      sendMessage: () => void;
+    }
+  }
+
+  const url = 'https://sasana-be-chat-ts.sasana.ai/v3/chat';
+  const headers = {
+    'Content-Type': 'application/json',
+    'X-API-KEY': 'g4gsKk7ftGZUzIg4NXBQLxTggaFpRmdqSEgdvPy0',
+  };
+
+  function appendMessage(text, sender) {
+    const chatMessages = document.getElementById('chat-messages');
+    const msgDiv = document.createElement('div');
+    msgDiv.classList.add('fade-in', 'mb-1', 'p-2', 'rounded', 'max-w-full', 'break-words');
+
+    if (sender === 'user') {
+      msgDiv.classList.add('bg-green-100', 'text-right', 'ml-auto', 'dark:bg-green-800', 'dark:text-white');
+      msgDiv.textContent = 'You: ' + text;
+    } else {
+      msgDiv.classList.add('bg-green-100', 'text-left', 'mr-auto', 'dark:bg-gray-700', 'dark:text-white');
+      msgDiv.innerHTML = 'Chatbot: ' + marked.parse(text);
+    }
+
+    if (chatMessages) {
+      chatMessages.appendChild(msgDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+  }
+
+  window.sendMessage = function () {
+    const messageInput = document.getElementById('message-input');
+    const message = (messageInput as HTMLInputElement)?.value.trim();
+    if (!message) return;
+
+    appendMessage(message, 'user');
+    (messageInput as HTMLInputElement).value = '';
+
+    const data = {
+      message,
+      userId: crypto.randomUUID(),
+      sessionId: crypto.randomUUID(),
+      agentId: 'd3216ab6-e5e5-4039-a0c2-07c736dd7252',
+    };
+
+    fetch(url, {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify(data),
+    })
+      .then(async (response) => {
+        const json = await response.json();
+
+        if (!response.ok) {
+          if (json && json.message) {
+            appendMessage(`❗ Error: ${json.message}`, 'bot');
+            appendMessage(`❗ Error Code: ${json.error}`, 'bot');
+            appendMessage(`❗ Error Status: ${json.statusCode}`, 'bot');
+          } else {
+            appendMessage('❗ Something went wrong. Please try again.', 'bot');
+          }
+          throw new Error(json.message || 'Unknown error');
+        }
+
+        const reply = json?.data?.content || 'No response received.';
+        appendMessage(reply, 'bot');
+      })
+      .catch((error) => {
+        console.error(error);
+        appendMessage('🚫 Failed to connect. Please check your internet or try again later.', 'bot');
+      });
+  };
+</script>

@@ -1,5 +1,18 @@
+---
+import { initChat } from '~/lib/chat';
+
+document.addEventListener('DOMContentLoaded', () => {
+  initChat(); // 👈 ini penting, biar window.sendMessage ke-define
+});
+---
+
+<script type="module">
+  import { initChat } from '~/lib/chat';
+  window.initChat = initChat;
+</script>
+
 <!-- Chatbox -->
-<div x-data="{ open: false }" x-cloak class="fixed bottom-6 right-6 z-50 flex items-center space-x-2">
+<div x-data="{ open: false }" x-init="initChat()" x-cloak class="fixed bottom-6 right-6 z-50 flex items-center space-x-2">
   <!-- Floating Text Label -->
   <div
     class="bg-white text-gray-800 text-xs font-medium px-3 py-2 rounded shadow-lg animate-bounce dark:bg-gray-800 dark:text-gray-200"
@@ -73,15 +86,6 @@
     </div>
   </div>
 </div>
-
-<!-- JS Logic -->
-<script>
-  import { initChat } from '~/lib/chat';
-
-  document.addEventListener('DOMContentLoaded', () => {
-    initChat(); // 👈 ini penting, biar window.sendMessage ke-define
-  });
-</script>
 
 <style>
   .chat-modal-fix {

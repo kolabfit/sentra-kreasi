@@ -146,12 +146,14 @@
         <input
           id="message-input"
           type="text"
-          placeholder="Type your question..."
+          placeholder="Ketik pesan Anda di sini..."
           class="flex-1 p-2 border rounded-l dark:bg-gray-800 dark:border-gray-600 dark:text-white"
         />
         <button
           id="send-button"
           class="px-3 bg-green-500 text-white rounded-r hover:bg-green-600 dark:bg-green-700 dark:hover:bg-green-600"
+          @click="sendMessage()"
+          @keydown.enter="sendMessage()"
         >
           Kirim
         </button>

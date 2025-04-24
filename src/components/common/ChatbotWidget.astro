@@ -83,15 +83,6 @@
 <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
-  import { marked } from 'marked';
-
-  // Extend the Window interface to include sendMessage
-  declare global {
-    interface Window {
-      sendMessage: () => void;
-    }
-  }
-
   const url = 'https://sasana-be-chat-ts.sasana.ai/v3/chat';
   const headers = {
     'Content-Type': 'application/json',
@@ -119,11 +110,11 @@
 
   window.sendMessage = function () {
     const messageInput = document.getElementById('message-input');
-    const message = (messageInput as HTMLInputElement)?.value.trim();
+    const message = messageInput?.value.trim();
     if (!message) return;
 
     appendMessage(message, 'user');
-    (messageInput as HTMLInputElement).value = '';
+    messageInput.value = '';
 
     const data = {
       message,

@@ -46,6 +46,18 @@ const { language, textDirection } = I18N;
       * {
         font-size: calc(100% - 5%);
       }
+
+      /* For the chat widget */
+      .chat-modal-fix {
+        max-height: 90vh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior: contain;
+      }
+
+      input:focus {
+        scroll-margin-bottom: 150px;
+      }
     </style>
   </head>
 

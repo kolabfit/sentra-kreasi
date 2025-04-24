@@ -1,3 +1,89 @@
+<!-- Chatbot Logic -->
+<script type="module">
+  import { marked } from 'marked';
+  import { APIKey } from '~/lib/chat';
+
+  const url = 'https://sasana-be-chat-ts.sasana.ai/v3/chat';
+  const headers = {
+    'Content-Type': 'application/json',
+    'X-API-KEY': APIKey,
+  };
+
+  // Mobile fix: scroll input ke tengah saat fokus
+  document.addEventListener('DOMContentLoaded', () => {
+    function appendMessage(text, sender) {
+      const chatMessages = document.getElementById('chat-messages');
+      const msgDiv = document.createElement('div');
+      msgDiv.classList.add('fade-in', 'mb-1', 'p-2', 'rounded', 'max-w-full', 'break-words');
+
+      if (sender === 'user') {
+        msgDiv.classList.add('bg-green-100', 'text-right', 'ml-auto', 'dark:bg-green-800', 'dark:text-white');
+        msgDiv.textContent = 'You: ' + text;
+      } else {
+        msgDiv.classList.add('bg-green-100', 'text-left', 'mr-auto', 'dark:bg-gray-700', 'dark:text-white');
+        msgDiv.innerHTML = 'Chatbot: ' + marked.parse(text);
+      }
+
+      if (chatMessages) {
+        chatMessages.appendChild(msgDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+    }
+
+    function sendMessage() {
+      const messageInput = document.getElementById('message-input');
+      const message = messageInput instanceof HTMLInputElement ? messageInput.value.trim() : '';
+      if (!message) return;
+
+      appendMessage(message, 'user');
+      if (messageInput instanceof HTMLInputElement) {
+        messageInput.value = '';
+      }
+
+      const data = {
+        message,
+        userId: crypto.randomUUID(),
+        sessionId: crypto.randomUUID(),
+        agentId: 'd3216ab6-e5e5-4039-a0c2-07c736dd7252',
+      };
+
+      fetch(url, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(data),
+      })
+        .then(async (response) => {
+          const json = await response.json();
+
+          if (!response.ok) {
+            if (json && json.message) {
+              appendMessage(`❗ Error: ${json.message}`, 'bot');
+              appendMessage(`❗ Error Code: ${json.error}`, 'bot');
+              appendMessage(`❗ Error Status: ${json.statusCode}`, 'bot');
+            } else {
+              appendMessage('❗ Something went wrong. Please try again.', 'bot');
+            }
+            throw new Error(json.message || 'Unknown error');
+          }
+
+          const reply = json?.data?.content || 'No response received.';
+          appendMessage(reply, 'bot');
+        })
+        .catch((error) => {
+          console.error(error);
+          appendMessage('🚫 Failed to connect. Please check your internet or try again later.', 'bot');
+        });
+    }
+
+    const input = document.getElementById('message-input');
+    input?.addEventListener('focus', () => {
+      setTimeout(() => {
+        input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 300);
+    });
+  });
+</script>
+
 <!-- Chatbox -->
 <div x-data="{ open: false }" x-cloak class="fixed bottom-6 right-6 z-50 flex items-center space-x-2">
   <!-- Floating Text Label -->
@@ -73,101 +159,3 @@
     </div>
   </div>
 </div>
-
-<!-- JS Logic -->
-<script type="module">
-  import { marked } from 'marked';
-
-  const url = 'https://sasana-be-chat-ts.sasana.ai/v3/chat';
-  const headers = {
-    'Content-Type': 'application/json',
-    'X-API-KEY': import.meta.env.PUBLIC_SASANA_API_KEY,
-  };
-
-  function appendMessage(text, sender) {
-    const chatMessages = document.getElementById('chat-messages');
-    const msgDiv = document.createElement('div');
-    msgDiv.classList.add('fade-in', 'mb-1', 'p-2', 'rounded', 'max-w-full', 'break-words');
-
-    if (sender === 'user') {
-      msgDiv.classList.add('bg-green-100', 'text-right', 'ml-auto', 'dark:bg-green-800', 'dark:text-white');
-      msgDiv.textContent = 'You: ' + text;
-    } else {
-      msgDiv.classList.add('bg-green-100', 'text-left', 'mr-auto', 'dark:bg-gray-700', 'dark:text-white');
-      msgDiv.innerHTML = 'Chatbot: ' + marked.parse(text);
-    }
-
-    if (chatMessages) {
-      chatMessages.appendChild(msgDiv);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-  }
-
-  sendMessage = function () {
-    const messageInput = document.getElementById('message-input');
-    const message = messageInput instanceof HTMLInputElement ? messageInput.value.trim() : '';
-    if (!message) return;
-
-    appendMessage(message, 'user');
-    if (messageInput instanceof HTMLInputElement) {
-      messageInput.value = '';
-    }
-
-    const data = {
-      message,
-      userId: crypto.randomUUID(),
-      sessionId: crypto.randomUUID(),
-      agentId: 'd3216ab6-e5e5-4039-a0c2-07c736dd7252',
-    };
-
-    fetch(url, {
-      method: 'POST',
-      headers: headers,
-      body: JSON.stringify(data),
-    })
-      .then(async (response) => {
-        const json = await response.json();
-
-        if (!response.ok) {
-          if (json && json.message) {
-            appendMessage(`❗ Error: ${json.message}`, 'bot');
-            appendMessage(`❗ Error Code: ${json.error}`, 'bot');
-            appendMessage(`❗ Error Status: ${json.statusCode}`, 'bot');
-          } else {
-            appendMessage('❗ Something went wrong. Please try again.', 'bot');
-          }
-          throw new Error(json.message || 'Unknown error');
-        }
-
-        const reply = json?.data?.content || 'No response received.';
-        appendMessage(reply, 'bot');
-      })
-      .catch((error) => {
-        console.error(error);
-        appendMessage('🚫 Failed to connect. Please check your internet or try again later.', 'bot');
-      });
-  };
-
-  // Mobile fix: scroll input ke tengah saat fokus
-  document.addEventListener('DOMContentLoaded', () => {
-    const input = document.getElementById('message-input');
-    input?.addEventListener('focus', () => {
-      setTimeout(() => {
-        input.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }, 300);
-    });
-  });
-</script>
-
-<style>
-  .chat-modal-fix {
-    max-height: 90vh;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior: contain;
-  }
-
-  input:focus {
-    scroll-margin-bottom: 150px;
-  }
-</style>

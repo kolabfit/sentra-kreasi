@@ -107,13 +107,44 @@
     }
   }
 
+  function showTypingIndicator() {
+    const chatMessages = document.getElementById('chat-messages');
+    const typingDiv = document.createElement('div');
+    typingDiv.id = 'typing-indicator';
+    typingDiv.classList.add(
+      'mb-1',
+      'p-2',
+      'rounded',
+      'max-w-full',
+      'break-words',
+      'bg-gray-200',
+      'text-left',
+      'mr-auto',
+      'text-sm',
+      'italic',
+      'dark:bg-gray-700',
+      'dark:text-gray-300'
+    );
+    typingDiv.textContent = 'Mohon menunggu, Chatbot sedang menulis...';
+    chatMessages.appendChild(typingDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  function removeTypingIndicator() {
+    const typingDiv = document.getElementById('typing-indicator');
+    if (typingDiv) {
+      typingDiv.remove();
+    }
+  }
+
   window.sendMessage = function () {
     const messageInput = document.getElementById('message-input');
     const message = messageInput?.value.trim();
     if (!message) return;
-
+    
     appendMessage(message, 'user');
     messageInput.value = '';
+    showTypingIndicator();
 
     const data = {
       message,
@@ -128,6 +159,7 @@
       body: JSON.stringify(data),
     })
       .then(async (response) => {
+        removeTypingIndicator();
         const json = await response.json();
 
         if (!response.ok) {
@@ -145,6 +177,7 @@
         appendMessage(reply, 'bot');
       })
       .catch((error) => {
+        removeTypingIndicator();
         console.error(error);
         appendMessage('🚫 Failed to connect. Please check your internet or try again later.', 'bot');
       });

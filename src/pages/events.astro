@@ -39,11 +39,11 @@ function truncateString(str: string, length: number = 200): string {
 }
 
 const ContentItems = entries.items.map((item) => {
-  const imageAsset: Asset | undefined = entries.includes?.Asset?.find(
-    (asset: Asset) => asset?.sys?.id === item?.fields?.gambar?.sys?.id
-  );
+  const imageAsset: Asset | undefined =
+    entries?.includes?.Asset?.find((asset: Asset) => asset?.sys?.id === item?.fields?.gambar?.sys?.id) ?? undefined;
 
   const imageURL: string | null = typeof imageAsset?.fields?.file?.url === 'string' ? imageAsset.fields.file.url : null;
+
   const descriptionHTML = item.fields.deskripsi ? marked.parse(item.fields.deskripsi) : '';
 
   return {
